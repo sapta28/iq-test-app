@@ -35,8 +35,8 @@ const CALLOUTS: CalloutItem[] = [
     borderColor: '#93c5fd',
     nodeX: 255,
     nodeY: 82,
-    elbowX: 210,
-    badgeX: 185,
+    elbowX: 200,
+    badgeX: 165,
     badgeY: 62,
     position: 'top-left',
     badgeOffsetStyle: { left: '8px' },
@@ -55,8 +55,8 @@ const CALLOUTS: CalloutItem[] = [
     borderColor: '#fde68a',
     nodeX: 345,
     nodeY: 118,
-    elbowX: 365,
-    badgeX: 345,
+    elbowX: 385,
+    badgeX: 360, // Ends cleanly right at the border of yellow badge
     badgeY: 62,
     position: 'top-right',
     badgeOffsetStyle: { right: '-24px' },
@@ -75,8 +75,8 @@ const CALLOUTS: CalloutItem[] = [
     borderColor: '#fbcfe8',
     nodeX: 195,
     nodeY: 245,
-    elbowX: 210,
-    badgeX: 185,
+    elbowX: 165,
+    badgeX: 140,
     badgeY: 326,
     position: 'bottom-left',
     badgeOffsetStyle: { left: '8px' },
@@ -94,9 +94,9 @@ const CALLOUTS: CalloutItem[] = [
     cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
     nodeX: 305, // Placed precisely on lower Rubik's cube tile
-    nodeY: 295,
-    elbowX: 325,
-    badgeX: 345, // Ends cleanly right at the left border of purple badge container!
+    nodeY: 300,
+    elbowX: 370,
+    badgeX: 360, // Ends cleanly right at the border of purple badge, 100% visible!
     badgeY: 326,
     position: 'bottom-right',
     badgeOffsetStyle: { right: '-24px' },
@@ -302,8 +302,8 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeWidth={strokeWidth + 2.5}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray="400"
-                  strokeDashoffset="400"
+                  strokeDasharray="500"
+                  strokeDashoffset="500"
                   style={{
                     animation: `growingLineEffect ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
                     opacity: 0.95,
@@ -314,12 +314,12 @@ export const BrainCognitiveDiagram: React.FC = () => {
                 <path
                   d={pathD}
                   fill="none"
-                  stroke={`url(#waterGrad-${item.id})`}
+                  stroke={item.color}
                   strokeWidth={strokeWidth}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray="400"
-                  strokeDashoffset="400"
+                  strokeDasharray="500"
+                  strokeDashoffset="500"
                   style={{
                     animation: `growingLineEffect ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
                     opacity: activeHover && !isHovered ? 0.35 : 1,
