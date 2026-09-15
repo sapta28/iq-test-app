@@ -111,16 +111,57 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
               </div>
             </div>
 
-            {/* Right Column – Brain Cube */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ width: '100%', maxWidth: '310px', aspectRatio: '1/1' }}>
+            {/* Right Column – Brain Cube (Animated) */}
+            <div className="lg:col-span-5" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ position: 'relative', width: '100%', maxWidth: '320px', aspectRatio: '1/1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+                {/* Sparkle / pulse rings */}
+                <div className="sparkle-ring" style={{
+                  position: 'absolute', inset: '-16px',
+                  borderRadius: '50%',
+                  border: '2px solid rgba(5,150,105,0.35)',
+                  pointerEvents: 'none',
+                }} />
+                <div className="sparkle-ring" style={{
+                  position: 'absolute', inset: '-28px',
+                  borderRadius: '50%',
+                  border: '1.5px solid rgba(5,150,105,0.20)',
+                  pointerEvents: 'none',
+                }} />
+                <div className="sparkle-ring" style={{
+                  position: 'absolute', inset: '-44px',
+                  borderRadius: '50%',
+                  border: '1px solid rgba(5,150,105,0.10)',
+                  pointerEvents: 'none',
+                }} />
+
+                {/* Floating glow orb behind the image */}
+                <div style={{
+                  position: 'absolute',
+                  width: '60%', height: '60%',
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle, rgba(5,150,105,0.18) 0%, transparent 70%)',
+                  filter: 'blur(20px)',
+                  pointerEvents: 'none',
+                  zIndex: 0,
+                }} />
+
+                {/* The Illustration */}
                 <img
                   src={brainCubeImg}
                   alt="Brain-cube psychometric illustration"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  className="brain-cube-animate"
+                  style={{
+                    width: '85%',
+                    height: '85%',
+                    objectFit: 'contain',
+                    position: 'relative',
+                    zIndex: 1,
+                  }}
                 />
               </div>
             </div>
+
           </div>
         </div>
       </section>

@@ -409,3 +409,45 @@ details[open] summary .group-open\:rotate-180 { transform: rotate(180deg); }
   header, footer, button, .no-print { display: none !important; }
   .max-w-2xl { max-width: 100% !important; border: 2px solid #333 !important; box-shadow: none !important; }
 }
+
+/* ============================================================
+   BRAIN-CUBE ILLUSTRATION ANIMATIONS
+   ============================================================ */
+
+/* 1. Float: smooth up-down levitation */
+@keyframes brainFloat {
+  0%   { transform: translateY(0px) rotate(-1deg); }
+  25%  { transform: translateY(-10px) rotate(0.5deg); }
+  50%  { transform: translateY(-18px) rotate(1.2deg); }
+  75%  { transform: translateY(-8px) rotate(-0.5deg); }
+  100% { transform: translateY(0px) rotate(-1deg); }
+}
+
+/* 2. Glow: pulsing green drop-shadow */
+@keyframes brainGlow {
+  0%   { filter: drop-shadow(0 0 6px rgba(5,150,105,0.25)) drop-shadow(0 8px 20px rgba(5,150,105,0.15)); }
+  40%  { filter: drop-shadow(0 0 18px rgba(5,150,105,0.55)) drop-shadow(0 14px 30px rgba(5,150,105,0.30)); }
+  100% { filter: drop-shadow(0 0 6px rgba(5,150,105,0.25)) drop-shadow(0 8px 20px rgba(5,150,105,0.15)); }
+}
+
+/* Combined class applied to the <img> */
+.brain-cube-animate {
+  animation:
+    brainFloat 5s ease-in-out infinite,
+    brainGlow  3s ease-in-out infinite;
+  transform-origin: center center;
+  will-change: transform, filter;
+}
+
+/* Sparkle lines around illustration – CSS-only particles */
+@keyframes sparklePing {
+  0%   { transform: scale(0.8); opacity: 0.9; }
+  60%  { transform: scale(1.3); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.sparkle-ring {
+  animation: sparklePing 2s ease-out infinite;
+}
+.sparkle-ring:nth-child(2) { animation-delay: 0.7s; }
+.sparkle-ring:nth-child(3) { animation-delay: 1.4s; }
+
