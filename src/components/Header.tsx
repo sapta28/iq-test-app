@@ -23,121 +23,174 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-200">
-      <div className="max-w-[1120px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-6">
-        {/* Brand Logo */}
+    <header style={{
+      position: 'sticky',
+      top: 0,
+      zIndex: 50,
+      background: 'rgba(255,255,255,0.97)',
+      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid #e5e7eb',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+    }}>
+      <div style={{
+        maxWidth: '1120px',
+        margin: '0 auto',
+        padding: '0 32px',
+        height: '64px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '24px',
+      }}>
+
+        {/* ── Brand / Logo ── */}
         <div
           onClick={isTesting ? undefined : onGoHome}
-          className={`flex items-center gap-3 group flex-shrink-0 ${
-            isTesting ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'
-          }`}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            flexShrink: 0,
+            cursor: isTesting ? 'not-allowed' : 'pointer',
+            opacity: isTesting ? 0.8 : 1,
+          }}
         >
-          <div className="w-9 h-9 rounded-lg bg-[#059669] text-white flex items-center justify-center font-bold shadow-sm group-hover:bg-[#047857] transition-colors">
-            <span className="material-symbols-outlined text-[20px]">grid_view</span>
+          {/* Icon box */}
+          <div style={{
+            width: '36px',
+            height: '36px',
+            borderRadius: '9px',
+            background: '#059669',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}>
+            <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#fff' }}>
+              grid_view
+            </span>
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2 leading-none">
-              <span className="text-lg font-extrabold text-gray-900 tracking-tight">NeuroMatrix</span>
-              <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 tracking-wider">
+
+          {/* Text block */}
+          <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{
+                fontSize: '17px',
+                fontWeight: 800,
+                color: '#111827',
+                letterSpacing: '-0.02em',
+              }}>
+                NeuroMatrix
+              </span>
+              <span style={{
+                fontSize: '9px',
+                fontWeight: 700,
+                color: '#6b7280',
+                background: '#f3f4f6',
+                border: '1px solid #e5e7eb',
+                borderRadius: '4px',
+                padding: '1px 5px',
+                letterSpacing: '0.07em',
+                textTransform: 'uppercase',
+              }}>
                 LABS
               </span>
             </div>
-            <span className="text-[11px] text-gray-500 tracking-normal mt-0.5">
-              Evaluasi Psikometrik Terkalibrasi
+            <span style={{
+              fontSize: '10.5px',
+              color: '#9ca3af',
+              marginTop: '3px',
+              letterSpacing: '0.01em',
+            }}>
+              Evaluasi Fluid Intelligence Terkalibrasi
             </span>
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+        {/* ── Desktop Navigation ── */}
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '32px', flex: 1, justifyContent: 'center' }}>
+          {/* Active: Beranda */}
           <button
             onClick={() => handleNavClick('beranda')}
-            className="text-sm font-semibold text-[#059669] py-1 border-b-2 border-[#059669] cursor-pointer"
+            style={{
+              background: 'none', border: 'none',
+              fontSize: '13.5px', fontWeight: 600,
+              color: '#059669',
+              borderBottom: '2px solid #059669',
+              paddingBottom: '2px',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+            }}
           >
             Beranda
           </button>
-          <button
-            onClick={() => handleNavClick('metodologi')}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors py-1 cursor-pointer"
-          >
-            Metodologi RPM
-          </button>
-          <button
-            onClick={() => handleNavClick('distribusi')}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors py-1 cursor-pointer"
-          >
-            Kohort Normatif
-          </button>
-          <button
-            onClick={() => handleNavClick('komparasi')}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors py-1 cursor-pointer"
-          >
-            Transparansi
-          </button>
-          <button
-            onClick={() => handleNavClick('faq')}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors py-1 cursor-pointer"
-          >
-            FAQ
-          </button>
+          {[
+            { label: 'Metodologi RPM', id: 'metodologi' },
+            { label: 'Kohort Normatif', id: 'distribusi' },
+            { label: 'Transparansi', id: 'komparasi' },
+            { label: 'FAQ', id: 'faq' },
+          ].map(({ label, id }) => (
+            <button
+              key={id}
+              onClick={() => handleNavClick(id)}
+              style={{
+                background: 'none', border: 'none',
+                fontSize: '13.5px', fontWeight: 500,
+                color: '#6b7280',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                transition: 'color 0.15s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#111827')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#6b7280')}
+            >
+              {label}
+            </button>
+          ))}
         </nav>
 
-        {/* Right CTA Cluster */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        {/* ── CTA Button ── */}
+        <div style={{ flexShrink: 0 }}>
           <button
             onClick={() => handleNavClick('mode-tes')}
-            className="hidden sm:inline-flex items-center justify-center h-10 px-5 rounded-lg bg-[#059669] hover:bg-[#047857] text-white font-semibold text-sm shadow-sm hover:shadow transition-all duration-150 active:scale-[0.98] cursor-pointer gap-1.5"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              height: '40px',
+              padding: '0 20px',
+              borderRadius: '9999px',
+              background: '#059669',
+              color: '#fff',
+              border: 'none',
+              fontWeight: 700,
+              fontSize: '13.5px',
+              cursor: 'pointer',
+              boxShadow: '0 2px 8px rgba(5,150,105,0.3)',
+              fontFamily: 'inherit',
+              whiteSpace: 'nowrap',
+              transition: 'background 0.15s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = '#047857')}
+            onMouseLeave={e => (e.currentTarget.style.background = '#059669')}
           >
             <span>Mulai Tes IQ Gratis</span>
-            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-          </button>
-
-          <button
-            aria-label="Buka Menu Navigasi"
-            className="md:hidden p-2 rounded-md hover:bg-gray-100 text-gray-800 cursor-pointer"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <span className="material-symbols-outlined">menu</span>
+            <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>arrow_forward</span>
           </button>
         </div>
+
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white px-4 py-3 space-y-2">
-          <button
-            onClick={() => handleNavClick('beranda')}
-            className="block w-full text-left py-2 px-3 text-sm font-semibold text-[#059669] bg-emerald-50 rounded"
-          >
-            BERANDA
-          </button>
-          <button
-            onClick={() => handleNavClick('metodologi')}
-            className="block w-full text-left py-2 px-3 text-sm text-gray-600 hover:bg-gray-50 rounded"
-          >
-            METODOLOGI RPM
-          </button>
-          <button
-            onClick={() => handleNavClick('distribusi')}
-            className="block w-full text-left py-2 px-3 text-sm text-gray-600 hover:bg-gray-50 rounded"
-          >
-            KOHORT NORMATIF
-          </button>
-          <button
-            onClick={() => handleNavClick('komparasi')}
-            className="block w-full text-left py-2 px-3 text-sm text-gray-600 hover:bg-gray-50 rounded"
-          >
-            TRANSPARANSI SKOR
-          </button>
-          <button
-            onClick={() => handleNavClick('mode-tes')}
-            className="block w-full text-center py-2.5 px-4 bg-[#059669] text-white font-semibold rounded-lg text-sm mt-2"
-          >
-            Mulai Tes IQ Sekarang
-          </button>
+        <div style={{ borderTop: '1px solid #e5e7eb', background: '#fff', padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <button onClick={() => handleNavClick('beranda')} style={{ textAlign: 'left', padding: '8px 12px', background: '#f0fdf4', color: '#059669', fontWeight: 700, fontSize: '13px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>BERANDA</button>
+          <button onClick={() => handleNavClick('metodologi')} style={{ textAlign: 'left', padding: '8px 12px', color: '#6b7280', fontSize: '13px', borderRadius: '6px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit' }}>METODOLOGI RPM</button>
+          <button onClick={() => handleNavClick('distribusi')} style={{ textAlign: 'left', padding: '8px 12px', color: '#6b7280', fontSize: '13px', borderRadius: '6px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit' }}>KOHORT NORMATIF</button>
+          <button onClick={() => handleNavClick('komparasi')} style={{ textAlign: 'left', padding: '8px 12px', color: '#6b7280', fontSize: '13px', borderRadius: '6px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit' }}>TRANSPARANSI</button>
+          <button onClick={() => handleNavClick('mode-tes')} style={{ textAlign: 'center', padding: '10px 16px', background: '#059669', color: '#fff', fontWeight: 700, fontSize: '13px', borderRadius: '9999px', border: 'none', cursor: 'pointer', marginTop: '4px', fontFamily: 'inherit' }}>Mulai Tes IQ Sekarang</button>
         </div>
       )}
     </header>
   );
 };
-
