@@ -26,8 +26,14 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
         }}
       >
         <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '7fr 5fr', gap: '40px', alignItems: 'center' }}>
-            {/* Left Column */}
+          {/* ── 2-column hero grid: left (text) | right (image) ── */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '7fr 5fr',
+            gap: '48px',
+            alignItems: 'center',
+          }}>
+            {/* ────── Left Column: Copywriting ────── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <h1 style={{
                 color: '#111827',
@@ -88,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
                 </a>
               </div>
 
-              {/* Social Proof Metrics Bar */}
+              {/* Social Proof Metrics */}
               <div style={{
                 borderTop: '1px solid #b2d8c2',
                 paddingTop: '24px',
@@ -111,26 +117,12 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
               </div>
             </div>
 
-            {/* Right Column – Brain Cube (Animated, position fixed) */}
-            <div style={{
-              gridColumn: 'span 5',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              /* Extra padding absorbs the float movement so the column height never changes */
-              padding: '32px 16px',
-            }}>
-              {/*
-                Outer wrapper: fixed size, overflow:visible so rings
-                don't create scrollbars but also don't shift layout
-              */}
-              <div style={{
-                position: 'relative',
-                width: '280px',
-                height: '280px',
-                flexShrink: 0,
-              }}>
-                {/* ── Pulse / sparkle rings (absolute, overflow:visible, no layout impact) ── */}
+            {/* ────── Right Column: Brain-Cube Illustration (Animated) ────── */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {/* Fixed-size wrapper — animation runs inside, does not shift grid */}
+              <div style={{ position: 'relative', width: '300px', height: '300px', flexShrink: 0 }}>
+
+                {/* Sparkle pulse rings — absolute, overflow visible, zero layout impact */}
                 <div className="sparkle-ring" style={{
                   position: 'absolute',
                   top: '-18px', left: '-18px', right: '-18px', bottom: '-18px',
@@ -147,24 +139,23 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
                 }} />
                 <div className="sparkle-ring" style={{
                   position: 'absolute',
-                  top: '-48px', left: '-48px', right: '-48px', bottom: '-48px',
+                  top: '-50px', left: '-50px', right: '-50px', bottom: '-50px',
                   borderRadius: '50%',
                   border: '1px solid rgba(5,150,105,0.10)',
                   pointerEvents: 'none',
                 }} />
 
-                {/* ── Glow orb behind image ── */}
+                {/* Glow orb */}
                 <div style={{
-                  position: 'absolute',
-                  inset: '20%',
+                  position: 'absolute', inset: '20%',
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(5,150,105,0.22) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle, rgba(5,150,105,0.20) 0%, transparent 70%)',
                   filter: 'blur(24px)',
                   pointerEvents: 'none',
                   zIndex: 0,
                 }} />
 
-                {/* ── Illustration: float animation runs in-place ── */}
+                {/* The illustration — floats & glows inside fixed box */}
                 <img
                   src={brainCubeImg}
                   alt="Brain-cube psychometric illustration"
@@ -181,8 +172,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
               </div>
             </div>
 
-
-          </div>
+          </div>{/* end 2-col grid */}
         </div>
       </section>
 
