@@ -1,6 +1,6 @@
 import React from 'react';
 import { TestMode, TestResult } from '../types';
-import { BrainCube3D } from './BrainCube3D';
+import brainCubeImg from '../assets/brain-cube.png';
 
 interface HeroProps {
   onStartTest: (mode: TestMode) => void;
@@ -117,9 +117,18 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
               </div>
             </div>
 
-            {/* ────── Right Column: Brain-Cube 3D ────── */}
+            {/* ────── Right Column: Brain-Cube Image ────── */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <BrainCube3D />
+              <img
+                src={brainCubeImg}
+                alt="Brain & Rubik's Cube Illustration"
+                style={{
+                  width: '100%',
+                  maxWidth: '380px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                }}
+              />
             </div>
 
 
