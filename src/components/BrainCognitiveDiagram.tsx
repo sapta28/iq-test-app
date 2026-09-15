@@ -22,6 +22,7 @@ interface CalloutItem {
 }
 
 // Sequence: 1. Biru (Blue) -> 2. Kuning (Yellow) -> 3. Merah/Pink (Red) -> 4. Ungu (Purple)
+// All lines bend OUTWARDS from brain/cube towards outer callout badges (matching reference image)
 const CALLOUTS: CalloutItem[] = [
   {
     id: 'frontal-lobe',
@@ -32,11 +33,11 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#1d4ed8',
     cardBg: 'rgba(239, 246, 255, 0.96)',
     borderColor: '#93c5fd',
-    nodeX: 232,
-    nodeY: 115,
-    elbowX: 210,
-    badgeX: 228,
-    badgeY: 76,
+    nodeX: 255,
+    nodeY: 82,
+    elbowX: 205,
+    badgeX: 180,
+    badgeY: 62,
     position: 'top-left',
     startDotDelay: 0.3,
     lineDelay: 0.6,
@@ -51,11 +52,11 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#b45309',
     cardBg: 'rgba(254, 252, 232, 0.96)',
     borderColor: '#fde68a',
-    nodeX: 345,
-    nodeY: 115,
-    elbowX: 355,
-    badgeX: 332,
-    badgeY: 76,
+    nodeX: 335,
+    nodeY: 82,
+    elbowX: 375,
+    badgeX: 390,
+    badgeY: 62,
     position: 'top-right',
     startDotDelay: 2.1,
     lineDelay: 2.4,
@@ -70,11 +71,11 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#be185d',
     cardBg: 'rgba(253, 242, 248, 0.96)',
     borderColor: '#fbcfe8',
-    nodeX: 202,
-    nodeY: 268,
-    elbowX: 210,
-    badgeX: 228,
-    badgeY: 308,
+    nodeX: 195,
+    nodeY: 245,
+    elbowX: 165,
+    badgeX: 180,
+    badgeY: 326,
     position: 'bottom-left',
     startDotDelay: 3.9,
     lineDelay: 4.2,
@@ -89,11 +90,11 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#6d28d9',
     cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
-    nodeX: 310,
-    nodeY: 288,
-    elbowX: 320,
-    badgeX: 332,
-    badgeY: 332,
+    nodeX: 305,
+    nodeY: 310,
+    elbowX: 370,
+    badgeX: 390,
+    badgeY: 348,
     position: 'bottom-right',
     startDotDelay: 5.7,
     lineDelay: 6.0,
@@ -157,7 +158,6 @@ export const BrainCognitiveDiagram: React.FC = () => {
         >
           {CALLOUTS.map((item) => {
             const isHovered = activeHover === item.id;
-            const isTop = item.position.startsWith('top');
             const isLeft = item.position.endsWith('left');
 
             return (
@@ -167,7 +167,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
                 onMouseLeave={() => setActiveHover(null)}
                 style={{
                   position: 'absolute',
-                  top: `${item.badgeY - 26}px`,
+                  top: `${item.badgeY - 22}px`,
                   left: isLeft ? '8px' : 'auto',
                   right: !isLeft ? '8px' : 'auto',
                   pointerEvents: 'auto',
@@ -283,7 +283,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
             const isHovered = activeHover === item.id;
             const strokeWidth = isHovered ? 3.5 : 2.5;
 
-            // Polyline path: Node -> Elbow -> Badge
+            // Polyline path bending OUTWARDS: Start Node -> Outward Elbow -> Badge End Node
             const pathD = `M ${item.nodeX} ${item.nodeY} L ${item.elbowX} ${item.badgeY} L ${item.badgeX} ${item.badgeY}`;
 
             return (
@@ -304,7 +304,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   }}
                 />
 
-                {/* 2. Main Growing Line (Garis Tumbuh dari titik awal ke titik akhir) */}
+                {/* 2. Main Growing Line (Garis Tumbuh belok keluar dari titik awal ke titik akhir) */}
                 <path
                   d={pathD}
                   fill="none"
