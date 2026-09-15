@@ -111,56 +111,76 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
               </div>
             </div>
 
-            {/* Right Column – Brain Cube (Animated) */}
-            <div className="lg:col-span-5" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ position: 'relative', width: '100%', maxWidth: '320px', aspectRatio: '1/1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-
-                {/* Sparkle / pulse rings */}
+            {/* Right Column – Brain Cube (Animated, position fixed) */}
+            <div style={{
+              gridColumn: 'span 5',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              /* Extra padding absorbs the float movement so the column height never changes */
+              padding: '32px 16px',
+            }}>
+              {/*
+                Outer wrapper: fixed size, overflow:visible so rings
+                don't create scrollbars but also don't shift layout
+              */}
+              <div style={{
+                position: 'relative',
+                width: '280px',
+                height: '280px',
+                flexShrink: 0,
+              }}>
+                {/* ── Pulse / sparkle rings (absolute, overflow:visible, no layout impact) ── */}
                 <div className="sparkle-ring" style={{
-                  position: 'absolute', inset: '-16px',
+                  position: 'absolute',
+                  top: '-18px', left: '-18px', right: '-18px', bottom: '-18px',
                   borderRadius: '50%',
                   border: '2px solid rgba(5,150,105,0.35)',
                   pointerEvents: 'none',
                 }} />
                 <div className="sparkle-ring" style={{
-                  position: 'absolute', inset: '-28px',
+                  position: 'absolute',
+                  top: '-32px', left: '-32px', right: '-32px', bottom: '-32px',
                   borderRadius: '50%',
                   border: '1.5px solid rgba(5,150,105,0.20)',
                   pointerEvents: 'none',
                 }} />
                 <div className="sparkle-ring" style={{
-                  position: 'absolute', inset: '-44px',
+                  position: 'absolute',
+                  top: '-48px', left: '-48px', right: '-48px', bottom: '-48px',
                   borderRadius: '50%',
                   border: '1px solid rgba(5,150,105,0.10)',
                   pointerEvents: 'none',
                 }} />
 
-                {/* Floating glow orb behind the image */}
+                {/* ── Glow orb behind image ── */}
                 <div style={{
                   position: 'absolute',
-                  width: '60%', height: '60%',
+                  inset: '20%',
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(5,150,105,0.18) 0%, transparent 70%)',
-                  filter: 'blur(20px)',
+                  background: 'radial-gradient(circle, rgba(5,150,105,0.22) 0%, transparent 70%)',
+                  filter: 'blur(24px)',
                   pointerEvents: 'none',
                   zIndex: 0,
                 }} />
 
-                {/* The Illustration */}
+                {/* ── Illustration: float animation runs in-place ── */}
                 <img
                   src={brainCubeImg}
                   alt="Brain-cube psychometric illustration"
                   className="brain-cube-animate"
                   style={{
-                    width: '85%',
-                    height: '85%',
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
                     objectFit: 'contain',
-                    position: 'relative',
                     zIndex: 1,
                   }}
                 />
               </div>
             </div>
+
 
           </div>
         </div>
