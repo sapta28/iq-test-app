@@ -132,69 +132,69 @@ export function App() {
       />
 
       {/* Footer (Academic Clinical Template) */}
-      <footer className="bg-white border-t border-border-subtle pt-12 pb-8 text-text-slate-secondary text-xs sm:text-sm">
+      <footer className="bg-white border-t border-gray-200 pt-12 pb-8 text-gray-600 text-xs sm:text-sm">
         <div className="max-w-[1120px] mx-auto px-4 sm:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-border-subtle">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-gray-200">
             {/* Brand & Credential Statement */}
             <div className="md:col-span-5 space-y-3">
               <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-text-slate-primary">NeuroMatrix</span>
-                <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant uppercase">
+                <span className="text-lg font-extrabold text-gray-900 tracking-tight">NeuroMatrix</span>
+                <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 uppercase tracking-wider">
                   LABS
                 </span>
               </div>
-              <p className="text-text-slate-secondary text-xs leading-relaxed max-w-sm">
+              <p className="text-gray-500 text-xs leading-relaxed max-w-sm">
                 Inisiatif sains terbuka untuk menyediakan tolok ukur pengujian fluid intelligence yang adil, bebas bias budaya, dan transparan tanpa paywall eksploitatif.
               </p>
-              <div className="flex items-center gap-3 pt-1 text-xs text-text-slate-secondary font-mono">
-                <span>KALIBRASI WECHSLER SD=15</span>
+              <div className="flex items-center gap-2 pt-1 text-[11px] text-gray-400 uppercase tracking-wider">
+                <span>KALIBRASI: WECHSLER SD=15</span>
                 <span>•</span>
-                <span>CRONBACH α 0.91</span>
+                <span>CRONBACH α: 0.92</span>
               </div>
             </div>
 
             {/* Links Column 1 */}
             <div className="md:col-span-2 sm:col-span-4 space-y-2.5">
-              <div className="text-xs text-text-slate-primary font-bold uppercase tracking-wider">METODOLOGI</div>
-              <ul className="space-y-2 text-xs">
-                <li><a className="hover:text-primary transition-colors" href="#metodologi">Raven SPM Basis</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#distribusi">Distribusi Gauss SD=15</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#komparasi">Normalisasi Kohort</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#metodologi">Item Response Theory</a></li>
+              <div className="text-xs text-gray-900 font-extrabold uppercase tracking-wider">METODOLOGI</div>
+              <ul className="space-y-2 text-xs text-gray-600">
+                <li><a className="hover:text-[#059669] transition-colors" href="#metodologi">Raven SPM Basis</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#distribusi">Distribusi Gauss SD=15</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#komparasi">Normalisasi Kohort</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#metodologi">Item Response Theory</a></li>
               </ul>
             </div>
 
             {/* Links Column 2 */}
             <div className="md:col-span-2 sm:col-span-4 space-y-2.5">
-              <div className="text-xs text-text-slate-primary font-bold uppercase tracking-wider">INSTRUMEN</div>
-              <ul className="space-y-2 text-xs">
-                <li><a className="hover:text-primary transition-colors" href="#mode-tes">Tes Standar (12 Min)</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#mode-tes">Tes Kilat (6 Min)</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#mode-tes">Mode Deconstruct</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#beranda">Verifikasi Sertifikat</a></li>
+              <div className="text-xs text-gray-900 font-extrabold uppercase tracking-wider">INSTRUMEN</div>
+              <ul className="space-y-2 text-xs text-gray-600">
+                <li><a className="hover:text-[#059669] transition-colors" href="#mode-tes">Tes Standar (12 Min)</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#mode-tes">Tes Kilat (5 Min)</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#mode-tes">Mode Deconstruct</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#beranda">Verifikasi Sertifikat</a></li>
               </ul>
             </div>
 
             {/* Links Column 3 */}
             <div className="md:col-span-3 sm:col-span-4 space-y-2.5">
-              <div className="text-xs text-text-slate-primary font-bold uppercase tracking-wider">ETIKA & PRIVASI</div>
-              <ul className="space-y-2 text-xs">
-                <li><a className="hover:text-primary transition-colors" href="#beranda">Protokol Client-Side Zero-Trace</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#beranda">Pemberitahuan Lisensi Bebas</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#beranda">Kode Etik Asosiasi Psikologi</a></li>
-                <li><a className="hover:text-primary transition-colors" href="#beranda">Kontribusi Dataset Anonim</a></li>
+              <div className="text-xs text-gray-900 font-extrabold uppercase tracking-wider">ETIKA & PRIVASI</div>
+              <ul className="space-y-2 text-xs text-gray-600">
+                <li><a className="hover:text-[#059669] transition-colors" href="#beranda">Protokol Client-Side Zero-Trace</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#beranda">Pemanfaatan Lisensi Bebas</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#beranda">Kode Etik Asosiasi Psikologi</a></li>
+                <li><a className="hover:text-[#059669] transition-colors" href="#beranda">Kontribusi Dataset Anonim</a></li>
               </ul>
             </div>
           </div>
 
           {/* Bottom Copyright */}
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-text-slate-secondary gap-3">
+          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-3">
             <div>
-              © 2026 NeuroMatrix Labs. Terbuka di bawah lisensi Open Psychometric Framework.
+              © 2025 NeuroMatrix Labs. Terbit di bawah lisensi Open Psychometric Framework.
             </div>
-            <div className="flex items-center gap-4">
-              <span className="inline-flex items-center gap-1 font-semibold text-primary">
-                <span className="material-symbols-outlined text-[14px]">verified</span> Validasi Terkalibrasi
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-1 font-medium text-gray-600">
+                <span className="w-2 h-2 rounded-full bg-[#059669]"></span> Validasi Terkalibrasi
               </span>
               <span>•</span>
               <span>Bukan Rujukan Diagnostik Medis Psikiatri</span>
