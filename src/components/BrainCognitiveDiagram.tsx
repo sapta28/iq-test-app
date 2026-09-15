@@ -32,10 +32,10 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#1d4ed8',
     cardBg: 'rgba(239, 246, 255, 0.96)',
     borderColor: '#93c5fd',
-    nodeX: 228,
-    nodeY: 118,
-    elbowX: 195,
-    badgeX: 180,
+    nodeX: 232,
+    nodeY: 115,
+    elbowX: 210,
+    badgeX: 228,
     badgeY: 76,
     position: 'top-left',
     startDotDelay: 0.3,
@@ -51,10 +51,10 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#b45309',
     cardBg: 'rgba(254, 252, 232, 0.96)',
     borderColor: '#fde68a',
-    nodeX: 342,
-    nodeY: 118,
-    elbowX: 375,
-    badgeX: 380,
+    nodeX: 345,
+    nodeY: 115,
+    elbowX: 355,
+    badgeX: 332,
     badgeY: 76,
     position: 'top-right',
     startDotDelay: 2.1,
@@ -71,9 +71,9 @@ const CALLOUTS: CalloutItem[] = [
     cardBg: 'rgba(253, 242, 248, 0.96)',
     borderColor: '#fbcfe8',
     nodeX: 202,
-    nodeY: 272,
-    elbowX: 172,
-    badgeX: 180,
+    nodeY: 268,
+    elbowX: 210,
+    badgeX: 228,
     badgeY: 308,
     position: 'bottom-left',
     startDotDelay: 3.9,
@@ -89,10 +89,10 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#6d28d9',
     cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
-    nodeX: 322,
-    nodeY: 298,
-    elbowX: 355,
-    badgeX: 380,
+    nodeX: 310,
+    nodeY: 288,
+    elbowX: 320,
+    badgeX: 332,
     badgeY: 332,
     position: 'bottom-right',
     startDotDelay: 5.7,
@@ -146,7 +146,111 @@ export const BrainCognitiveDiagram: React.FC = () => {
           />
         </div>
 
-        {/* SVG Flowchart Lines & Round Anchor/End Nodes */}
+        {/* HTML Callout Badges Layer (Zoom-In from small object to full size) */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 3,
+            pointerEvents: 'none',
+          }}
+        >
+          {CALLOUTS.map((item) => {
+            const isHovered = activeHover === item.id;
+            const isTop = item.position.startsWith('top');
+            const isLeft = item.position.endsWith('left');
+
+            return (
+              <div
+                key={item.id}
+                onMouseEnter={() => setActiveHover(item.id)}
+                onMouseLeave={() => setActiveHover(null)}
+                style={{
+                  position: 'absolute',
+                  top: `${item.badgeY - 26}px`,
+                  left: isLeft ? '8px' : 'auto',
+                  right: !isLeft ? '8px' : 'auto',
+                  pointerEvents: 'auto',
+                  cursor: 'pointer',
+                  opacity: 0,
+                  transformOrigin: isLeft ? 'right center' : 'left center',
+                  animation: `badgeZoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${item.badgeDelay}s forwards`,
+                  transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+                  transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
+                }}
+              >
+                {/* Modern Pill Badge Container */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    background: item.cardBg,
+                    border: `1.5px solid ${item.borderColor}`,
+                    borderRadius: '9999px',
+                    padding: '4px 16px 4px 5px',
+                    boxShadow: isHovered
+                      ? `0 8px 20px ${item.color}33`
+                      : '0 4px 12px rgba(0,0,0,0.06)',
+                    backdropFilter: 'blur(8px)',
+                    maxWidth: '230px',
+                  }}
+                >
+                  {/* Circle Icon Badge */}
+                  <div
+                    style={{
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: `linear-gradient(135deg, ${item.color} 0%, ${item.accentBg} 100%)`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#ffffff',
+                      boxShadow: `0 2px 6px ${item.color}55`,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
+                      {item.icon}
+                    </span>
+                  </div>
+
+                  {/* Title & Subtitle */}
+                  <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                    <div
+                      style={{
+                        fontSize: '13px',
+                        fontWeight: 700,
+                        color: '#1e293b',
+                        lineHeight: 1.2,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {item.title}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: '10px',
+                        fontWeight: 600,
+                        color: item.color,
+                        lineHeight: 1.2,
+                        marginTop: '1px',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {item.subtitle}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* SVG Flowchart Lines & Round Anchor/End Nodes (zIndex: 5 - ALWAYS VISIBLE ON TOP) */}
         <svg
           viewBox="0 0 560 420"
           style={{
@@ -155,7 +259,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
             width: '100%',
             height: '100%',
             pointerEvents: 'none',
-            zIndex: 3,
+            zIndex: 5,
           }}
         >
           <defs>
@@ -265,109 +369,6 @@ export const BrainCognitiveDiagram: React.FC = () => {
           })}
         </svg>
 
-        {/* HTML Callout Badges Layer (Zoom-In from small object to full size) */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 4,
-            pointerEvents: 'none',
-          }}
-        >
-          {CALLOUTS.map((item) => {
-            const isHovered = activeHover === item.id;
-            const isTop = item.position.startsWith('top');
-            const isLeft = item.position.endsWith('left');
-
-            return (
-              <div
-                key={item.id}
-                onMouseEnter={() => setActiveHover(item.id)}
-                onMouseLeave={() => setActiveHover(null)}
-                style={{
-                  position: 'absolute',
-                  top: `${item.badgeY - 26}px`,
-                  left: isLeft ? '8px' : 'auto',
-                  right: !isLeft ? '8px' : 'auto',
-                  pointerEvents: 'auto',
-                  cursor: 'pointer',
-                  opacity: 0,
-                  transformOrigin: isLeft ? 'right center' : 'left center',
-                  animation: `badgeZoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${item.badgeDelay}s forwards`,
-                  transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-                  transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
-                }}
-              >
-                {/* Modern Pill Badge Container */}
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    background: item.cardBg,
-                    border: `1.5px solid ${item.borderColor}`,
-                    borderRadius: '9999px',
-                    padding: '4px 16px 4px 5px',
-                    boxShadow: isHovered
-                      ? `0 8px 20px ${item.color}33`
-                      : '0 4px 12px rgba(0,0,0,0.06)',
-                    backdropFilter: 'blur(8px)',
-                    maxWidth: '230px',
-                  }}
-                >
-                  {/* Circle Icon Badge */}
-                  <div
-                    style={{
-                      width: '36px',
-                      height: '36px',
-                      borderRadius: '50%',
-                      background: `linear-gradient(135deg, ${item.color} 0%, ${item.accentBg} 100%)`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#ffffff',
-                      boxShadow: `0 2px 6px ${item.color}55`,
-                      flexShrink: 0,
-                    }}
-                  >
-                    <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
-                      {item.icon}
-                    </span>
-                  </div>
-
-                  {/* Title & Subtitle */}
-                  <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                    <div
-                      style={{
-                        fontSize: '13px',
-                        fontWeight: 700,
-                        color: '#1e293b',
-                        lineHeight: 1.2,
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {item.title}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: '10px',
-                        fontWeight: 600,
-                        color: item.color,
-                        lineHeight: 1.2,
-                        marginTop: '1px',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                      }}
-                    >
-                      {item.subtitle}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </div>
   );
