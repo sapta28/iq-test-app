@@ -1,6 +1,6 @@
 import React from 'react';
 import { TestMode, TestResult } from '../types';
-import brainCubeImg from '../assets/brain-cube.png';
+import { BrainCube3D } from './BrainCube3D';
 
 interface HeroProps {
   onStartTest: (mode: TestMode) => void;
@@ -117,60 +117,11 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
               </div>
             </div>
 
-            {/* ────── Right Column: Brain-Cube Illustration (Animated) ────── */}
-            <div className="brain-cube-perspective" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {/* Fixed-size wrapper — animation runs inside, does not shift grid */}
-              <div style={{ position: 'relative', width: '300px', height: '300px', flexShrink: 0 }}>
-
-                {/* Sparkle pulse rings — absolute, overflow visible, zero layout impact */}
-                <div className="sparkle-ring" style={{
-                  position: 'absolute',
-                  top: '-18px', left: '-18px', right: '-18px', bottom: '-18px',
-                  borderRadius: '50%',
-                  border: '2px solid rgba(5,150,105,0.35)',
-                  pointerEvents: 'none',
-                }} />
-                <div className="sparkle-ring" style={{
-                  position: 'absolute',
-                  top: '-32px', left: '-32px', right: '-32px', bottom: '-32px',
-                  borderRadius: '50%',
-                  border: '1.5px solid rgba(5,150,105,0.20)',
-                  pointerEvents: 'none',
-                }} />
-                <div className="sparkle-ring" style={{
-                  position: 'absolute',
-                  top: '-50px', left: '-50px', right: '-50px', bottom: '-50px',
-                  borderRadius: '50%',
-                  border: '1px solid rgba(5,150,105,0.10)',
-                  pointerEvents: 'none',
-                }} />
-
-                {/* Glow orb */}
-                <div style={{
-                  position: 'absolute', inset: '20%',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(5,150,105,0.20) 0%, transparent 70%)',
-                  filter: 'blur(24px)',
-                  pointerEvents: 'none',
-                  zIndex: 0,
-                }} />
-
-                {/* The illustration — floats & glows inside fixed box */}
-                <img
-                  src={brainCubeImg}
-                  alt="Brain-cube psychometric illustration"
-                  className="brain-cube-animate"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    zIndex: 1,
-                  }}
-                />
-              </div>
+            {/* ────── Right Column: Brain-Cube 3D ────── */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <BrainCube3D />
             </div>
+
 
           </div>{/* end 2-col grid */}
         </div>
