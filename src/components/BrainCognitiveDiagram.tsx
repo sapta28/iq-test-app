@@ -16,13 +16,13 @@ interface CalloutItem {
   badgeX: number; // End point near badge
   badgeY: number;
   position: 'top-left' | 'bottom-left' | 'top-right' | 'bottom-right';
+  badgeOffsetStyle: React.CSSProperties;
   startDotDelay: number;
   lineDelay: number;
   badgeDelay: number;
 }
 
 // Sequence: 1. Biru (Blue) -> 2. Kuning (Yellow) -> 3. Merah/Pink (Red) -> 4. Ungu (Purple)
-// All lines bend OUTWARDS from brain/cube towards outer callout badges (matching reference image)
 const CALLOUTS: CalloutItem[] = [
   {
     id: 'frontal-lobe',
@@ -39,6 +39,7 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 180,
     badgeY: 62,
     position: 'top-left',
+    badgeOffsetStyle: { left: '8px' },
     startDotDelay: 0.3,
     lineDelay: 0.6,
     badgeDelay: 1.7,
@@ -54,10 +55,11 @@ const CALLOUTS: CalloutItem[] = [
     borderColor: '#fde68a',
     nodeX: 335,
     nodeY: 82,
-    elbowX: 375,
-    badgeX: 390,
+    elbowX: 395,
+    badgeX: 415,
     badgeY: 62,
     position: 'top-right',
+    badgeOffsetStyle: { right: '-24px' }, // Shifted further right to prevent overlapping!
     startDotDelay: 2.1,
     lineDelay: 2.4,
     badgeDelay: 3.5,
@@ -77,6 +79,7 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 180,
     badgeY: 326,
     position: 'bottom-left',
+    badgeOffsetStyle: { left: '8px' },
     startDotDelay: 3.9,
     lineDelay: 4.2,
     badgeDelay: 5.3,
@@ -96,6 +99,7 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 390,
     badgeY: 348,
     position: 'bottom-right',
+    badgeOffsetStyle: { right: '8px' },
     startDotDelay: 5.7,
     lineDelay: 6.0,
     badgeDelay: 7.1,
@@ -115,10 +119,11 @@ export const BrainCognitiveDiagram: React.FC = () => {
         maxWidth: '560px',
         margin: '0 auto',
         padding: '16px 0',
+        overflow: 'visible',
       }}
     >
       {/* Container wrapper for aspect ratio calibration */}
-      <div style={{ position: 'relative', width: '100%', height: '420px' }}>
+      <div style={{ position: 'relative', width: '100%', height: '420px', overflow: 'visible' }}>
         
         {/* Central Brain-Cube Image */}
         <div
@@ -154,6 +159,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
             inset: 0,
             zIndex: 3,
             pointerEvents: 'none',
+            overflow: 'visible',
           }}
         >
           {CALLOUTS.map((item) => {
@@ -168,8 +174,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
                 style={{
                   position: 'absolute',
                   top: `${item.badgeY - 22}px`,
-                  left: isLeft ? '8px' : 'auto',
-                  right: !isLeft ? '8px' : 'auto',
+                  ...item.badgeOffsetStyle,
                   pointerEvents: 'auto',
                   cursor: 'pointer',
                   opacity: 0,
@@ -260,6 +265,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
             height: '100%',
             pointerEvents: 'none',
             zIndex: 5,
+            overflow: 'visible',
           }}
         >
           <defs>
