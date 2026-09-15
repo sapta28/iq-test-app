@@ -1,51 +1,143 @@
-import React from 'react';
-import { Brain, ShieldCheck, Code, Award } from 'lucide-react';
+import React, { useState } from 'react';
 
 interface HeaderProps {
   onOpenTechGuide: () => void;
   onGoHome: () => void;
   isTesting: boolean;
+  onScrollToSection: (sectionId: string) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenTechGuide, onGoHome, isTesting }) => {
+export const Header: React.FC<HeaderProps> = ({
+  onOpenTechGuide,
+  onGoHome,
+  isTesting,
+  onScrollToSection,
+}) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleNavClick = (sectionId: string) => {
+    onGoHome();
+    setTimeout(() => {
+      onScrollToSection(sectionId);
+    }, 100);
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo (Personality.co inspired green emblem) */}
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border border-border-subtle shadow-sm transition-all duration-200">
+      <div className="max-w-[1120px] mx-auto px-6 sm:px-8 py-3.5 flex items-center justify-between gap-6">
+        {/* Brand Logo */}
         <div
           onClick={isTesting ? undefined : onGoHome}
-          className={`flex items-center gap-3 ${isTesting ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'}`}
+          className={`flex items-center gap-3.5 group flex-shrink-0 ${
+            isTesting ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'
+          }`}
         >
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-500/20 flex items-center justify-center text-emerald-600 shadow-sm">
-            <Brain className="w-6 h-6 text-emerald-600" />
+          <div className="w-10 h-10 rounded-lg bg-primary-container text-white flex items-center justify-center font-bold shadow-sm group-hover:bg-primary transition-colors">
+            <span className="material-symbols-outlined text-[22px]">grid_view</span>
           </div>
-          <div>
+          <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl text-slate-900 tracking-tight">NeuroMatrix</span>
-              <span className="text-xs bg-emerald-50 text-emerald-700 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
-                IQ Certified
+              <span className="text-xl font-bold text-text-slate-primary tracking-tight">NeuroMatrix</span>
+              <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant tracking-wider">
+                LABS
               </span>
             </div>
-            <span className="text-xs text-slate-500 hidden sm:block font-medium">Standardized Fluid Intelligence Assessment</span>
+            <span className="text-[11px] text-text-slate-secondary tracking-normal">
+              Evaluasi Fluid Intelligence Terkalibrasi
+            </span>
           </div>
         </div>
 
-        {/* Right Actions */}
-        <div className="flex items-center gap-3">
-          <div className="hidden md:flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-500/20 px-3 py-1.5 rounded-lg">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>100% Free & Certified</span>
-          </div>
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+          <button
+            onClick={() => handleNavClick('beranda')}
+            className="text-sm font-semibold text-primary py-1 border-b-2 border-primary cursor-pointer"
+          >
+            Beranda
+          </button>
+          <button
+            onClick={() => handleNavClick('metodologi')}
+            className="text-sm font-medium text-text-slate-secondary hover:text-text-slate-primary transition-colors py-1 cursor-pointer"
+          >
+            Metodologi RPM
+          </button>
+          <button
+            onClick={() => handleNavClick('distribusi')}
+            className="text-sm font-medium text-text-slate-secondary hover:text-text-slate-primary transition-colors py-1 cursor-pointer"
+          >
+            Kohort Normatif
+          </button>
+          <button
+            onClick={() => handleNavClick('komparasi')}
+            className="text-sm font-medium text-text-slate-secondary hover:text-text-slate-primary transition-colors py-1 cursor-pointer"
+          >
+            Transparansi
+          </button>
+          <button
+            onClick={() => handleNavClick('faq')}
+            className="text-sm font-medium text-text-slate-secondary hover:text-text-slate-primary transition-colors py-1 cursor-pointer"
+          >
+            FAQ
+          </button>
+        </nav>
+
+        {/* Right CTA Cluster */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <button
+            onClick={() => handleNavClick('mode-tes')}
+            className="hidden sm:inline-flex items-center justify-center h-10 px-5 rounded-md bg-primary-container hover:bg-primary text-white font-semibold text-sm shadow-sm hover:shadow transition-all duration-150 active:scale-[0.98] cursor-pointer"
+          >
+            <span>Mulai Tes IQ Gratis</span>
+            <span className="material-symbols-outlined text-[18px] ml-1.5">arrow_forward</span>
+          </button>
 
           <button
-            onClick={onOpenTechGuide}
-            className="flex items-center gap-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 px-3.5 py-2 rounded-lg transition-all"
+            aria-label="Buka Menu Navigasi"
+            className="md:hidden p-2 rounded-md hover:bg-surface-soft-slate text-text-slate-primary cursor-pointer"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <Code className="w-4 h-4 text-slate-600" />
-            <span>Panduan Teknis</span>
+            <span className="material-symbols-outlined">menu</span>
           </button>
         </div>
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-border-subtle bg-white px-4 py-3 space-y-2">
+          <button
+            onClick={() => handleNavClick('beranda')}
+            className="block w-full text-left py-2 px-3 text-sm font-semibold text-primary bg-surface-soft-slate rounded"
+          >
+            BERANDA
+          </button>
+          <button
+            onClick={() => handleNavClick('metodologi')}
+            className="block w-full text-left py-2 px-3 text-sm text-text-slate-secondary hover:bg-surface-soft-slate rounded"
+          >
+            METODOLOGI RPM
+          </button>
+          <button
+            onClick={() => handleNavClick('distribusi')}
+            className="block w-full text-left py-2 px-3 text-sm text-text-slate-secondary hover:bg-surface-soft-slate rounded"
+          >
+            KOHORT NORMATIF
+          </button>
+          <button
+            onClick={() => handleNavClick('komparasi')}
+            className="block w-full text-left py-2 px-3 text-sm text-text-slate-secondary hover:bg-surface-soft-slate rounded"
+          >
+            TRANSPARANSI SKOR
+          </button>
+          <button
+            onClick={() => handleNavClick('mode-tes')}
+            className="block w-full text-center py-2.5 px-4 bg-primary-container text-white font-semibold rounded text-sm mt-2"
+          >
+            Mulai Tes IQ Sekarang
+          </button>
+        </div>
+      )}
     </header>
   );
 };
