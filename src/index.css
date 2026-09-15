@@ -411,30 +411,32 @@ details[open] summary .group-open\:rotate-180 { transform: rotate(180deg); }
 }
 
 /* ============================================================
-   COGNITIVE FLOW DIAGRAM — SEQUENTIAL BLUR-IN & LINE FLOW
+   COGNITIVE FLOW DIAGRAM — ZOOM-IN & GROWING LINE EFFECT
    ============================================================ */
 
-/* 1. Node Dot Blur-In Entry directly at target position (No sliding) */
-@keyframes dotBlurIn {
+/* 1. Zoom In Animation for Node Dots (Membesar dari titik kecil) */
+@keyframes dotZoomIn {
   0% {
     opacity: 0;
-    filter: blur(8px);
-    transform: scale(0.3);
+    transform: scale(0);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.18);
   }
   100% {
     opacity: 1;
-    filter: blur(0px);
     transform: scale(1);
   }
 }
 
-/* 2. Sequential Line Flow outward from start dot to end dot */
-@keyframes lineFlowSequential {
+/* 2. Growing Line Effect (Garis tumbuh dari titik awal ke titik akhir) */
+@keyframes growingLineEffect {
   0% {
     stroke-dashoffset: 360;
-    opacity: 0.1;
+    opacity: 0.15;
   }
-  20% {
+  15% {
     opacity: 1;
   }
   100% {
@@ -443,22 +445,19 @@ details[open] summary .group-open\:rotate-180 { transform: rotate(180deg); }
   }
 }
 
-/* 3. Badge Blur & Pop-In (triggers after line reaches end dot) */
-@keyframes badgeBlurPop {
+/* 3. Zoom In Animation for Callout Badge (Membesar dari titik/objek kecil ke ukuran normal) */
+@keyframes badgeZoomIn {
   0% {
     opacity: 0;
-    filter: blur(6px);
-    transform: scale(0.85) translateY(4px);
+    transform: scale(0.1);
   }
-  70% {
+  75% {
     opacity: 1;
-    filter: blur(0px);
-    transform: scale(1.04) translateY(-1px);
+    transform: scale(1.05);
   }
   100% {
     opacity: 1;
-    filter: blur(0px);
-    transform: scale(1) translateY(0);
+    transform: scale(1);
   }
 }
 

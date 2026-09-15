@@ -21,7 +21,7 @@ interface CalloutItem {
   badgeDelay: number;
 }
 
-// 1. Biru (Blue) -> 2. Kuning (Yellow) -> 3. Merah/Pink (Red) -> 4. Ungu (Purple)
+// Sequence: 1. Biru (Blue) -> 2. Kuning (Yellow) -> 3. Merah/Pink (Red) -> 4. Ungu (Purple)
 const CALLOUTS: CalloutItem[] = [
   {
     id: 'frontal-lobe',
@@ -104,7 +104,7 @@ const CALLOUTS: CalloutItem[] = [
 export const BrainCognitiveDiagram: React.FC = () => {
   const [activeHover, setActiveHover] = useState<string | null>(null);
 
-  const lineDuration = 1.1; // Line flow duration (seconds)
+  const lineDuration = 1.1; // Growing Line Effect duration (seconds)
 
   return (
     <div
@@ -184,7 +184,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
 
             return (
               <g key={item.id}>
-                {/* 1. White Background Shadow Line */}
+                {/* 1. White Background Shadow Line (Growing Line Effect) */}
                 <path
                   d={pathD}
                   fill="none"
@@ -195,12 +195,12 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeDasharray="360"
                   strokeDashoffset="360"
                   style={{
-                    animation: `lineFlowSequential ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
+                    animation: `growingLineEffect ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
                     opacity: 0.95,
                   }}
                 />
 
-                {/* 2. Main Fluid Line (Flows out from start node to end node) */}
+                {/* 2. Main Growing Line (Garis Tumbuh dari titik awal ke titik akhir) */}
                 <path
                   d={pathD}
                   fill="none"
@@ -211,14 +211,20 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeDasharray="360"
                   strokeDashoffset="360"
                   style={{
-                    animation: `lineFlowSequential ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
+                    animation: `growingLineEffect ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
                     opacity: activeHover && !isHovered ? 0.35 : 1,
                     transition: 'stroke-width 0.3s ease, opacity 0.3s ease',
                   }}
                 />
 
-                {/* 3. START POINT: Node Dot Blurs-In DIRECTLY at position (NO sliding) */}
-                <g style={{ opacity: 0, animation: `dotBlurIn 0.4s ease-out ${item.startDotDelay}s forwards` }}>
+                {/* 3. START POINT: Node Dot Zoom-In (Membesar dari titik kecil) */}
+                <g
+                  style={{
+                    opacity: 0,
+                    transformOrigin: `${item.nodeX}px ${item.nodeY}px`,
+                    animation: `dotZoomIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) ${item.startDotDelay}s forwards`,
+                  }}
+                >
                   <circle
                     cx={item.nodeX}
                     cy={item.nodeY}
@@ -233,8 +239,14 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   />
                 </g>
 
-                {/* 4. END POINT: Round Circle Dot Blurs-In DIRECTLY at badge position when line arrives */}
-                <g style={{ opacity: 0, animation: `dotBlurIn 0.4s ease-out ${item.badgeDelay}s forwards` }}>
+                {/* 4. END POINT: Round Circle Dot Zoom-In near Badge (Membesar saat garis tumbuh sampai) */}
+                <g
+                  style={{
+                    opacity: 0,
+                    transformOrigin: `${item.badgeX}px ${item.badgeY}px`,
+                    animation: `dotZoomIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) ${item.badgeDelay}s forwards`,
+                  }}
+                >
                   <circle
                     cx={item.badgeX}
                     cy={item.badgeY}
@@ -253,7 +265,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
           })}
         </svg>
 
-        {/* HTML Callout Badges Layer (Blurs & pops in directly after line finishes flowing) */}
+        {/* HTML Callout Badges Layer (Zoom-In from small object to full size) */}
         <div
           style={{
             position: 'absolute',
@@ -274,13 +286,14 @@ export const BrainCognitiveDiagram: React.FC = () => {
                 onMouseLeave={() => setActiveHover(null)}
                 style={{
                   position: 'absolute',
-                  top: isTop ? `${item.badgeY - 26}px` : `${item.badgeY - 26}px`,
+                  top: `${item.badgeY - 26}px`,
                   left: isLeft ? '8px' : 'auto',
                   right: !isLeft ? '8px' : 'auto',
                   pointerEvents: 'auto',
                   cursor: 'pointer',
                   opacity: 0,
-                  animation: `badgeBlurPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${item.badgeDelay}s forwards`,
+                  transformOrigin: isLeft ? 'right center' : 'left center',
+                  animation: `badgeZoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${item.badgeDelay}s forwards`,
                   transform: isHovered ? 'scale(1.05)' : 'scale(1)',
                   transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
                 }}
