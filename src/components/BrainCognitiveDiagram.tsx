@@ -53,13 +53,13 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#b45309',
     cardBg: 'rgba(254, 252, 232, 0.96)',
     borderColor: '#fde68a',
-    nodeX: 335,
-    nodeY: 82,
+    nodeX: 345,
+    nodeY: 118, // Placed exactly on the upper yellow tile of the Rubik's cube
     elbowX: 395,
     badgeX: 415,
     badgeY: 62,
     position: 'top-right',
-    badgeOffsetStyle: { right: '-24px' }, // Shifted further right to prevent overlapping!
+    badgeOffsetStyle: { right: '-24px' },
     startDotDelay: 2.1,
     lineDelay: 2.4,
     badgeDelay: 3.5,
