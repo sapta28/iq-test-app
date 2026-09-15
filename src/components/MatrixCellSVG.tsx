@@ -121,7 +121,7 @@ export const MatrixCellSVG: React.FC<MatrixCellSVGProps> = ({
                   fill={fill}
                   stroke={stroke}
                   strokeWidth={strokeWidth}
-                  strokeJoin="round"
+                  strokeLinejoin="round"
                   transform={transform}
                 />
               );
