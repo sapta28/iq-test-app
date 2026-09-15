@@ -118,7 +118,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
             </div>
 
             {/* ────── Right Column: Brain-Cube Illustration (Animated) ────── */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="brain-cube-perspective" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* Fixed-size wrapper — animation runs inside, does not shift grid */}
               <div style={{ position: 'relative', width: '300px', height: '300px', flexShrink: 0 }}>
 
