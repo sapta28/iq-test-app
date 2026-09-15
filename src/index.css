@@ -420,13 +420,13 @@ details[open] summary .group-open\:rotate-180 { transform: rotate(180deg); }
   100% { opacity: 1; transform: scale(1); }
 }
 
-/* Fluid water stream line drawing from brain/cube outward */
-@keyframes waterFlowStream {
+/* Slow fluid water stream line drawing from brain/cube outward */
+@keyframes waterFlowStreamSlow {
   0% {
     stroke-dashoffset: 360;
-    opacity: 0.3;
+    opacity: 0.15;
   }
-  30% {
+  25% {
     opacity: 1;
   }
   100% {

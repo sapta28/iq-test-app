@@ -16,7 +16,7 @@ interface CalloutItem {
   badgeX: number; // End point near badge
   badgeY: number;
   position: 'top-left' | 'bottom-left' | 'top-right' | 'bottom-right';
-  drawDelay: number; // Delay in seconds for fluid draw start
+  drawDelay: number; // Delay in seconds for slow sequential draw start
 }
 
 const CALLOUTS: CalloutItem[] = [
@@ -35,7 +35,7 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 180,
     badgeY: 76,
     position: 'top-left',
-    drawDelay: 0.2, // 1st line starts at 0.2s
+    drawDelay: 0.3, // 1st line: 0.3s -> 1.6s
   },
   {
     id: 'spatial-vis',
@@ -52,7 +52,7 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 380,
     badgeY: 76,
     position: 'top-right',
-    drawDelay: 1.0, // 2nd line starts at 1.0s
+    drawDelay: 2.1, // 2nd line: 2.1s -> 3.4s
   },
   {
     id: 'parietal-lobe',
@@ -69,7 +69,7 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 180,
     badgeY: 308,
     position: 'bottom-left',
-    drawDelay: 1.8, // 3rd line starts at 1.8s
+    drawDelay: 3.9, // 3rd line: 3.9s -> 5.2s
   },
   {
     id: 'problem-solving',
@@ -86,12 +86,14 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 380,
     badgeY: 332,
     position: 'bottom-right',
-    drawDelay: 2.6, // 4th line starts at 2.6s
+    drawDelay: 5.7, // 4th line: 5.7s -> 7.0s
   },
 ];
 
 export const BrainCognitiveDiagram: React.FC = () => {
   const [activeHover, setActiveHover] = useState<string | null>(null);
+
+  const flowDuration = 1.3; // Unhurried slow fluid flow duration per line (seconds)
 
   return (
     <div
@@ -133,7 +135,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
           />
         </div>
 
-        {/* SVG Flowchart Water Arrows & Anchor Nodes */}
+        {/* SVG Flowchart Lines & Round Anchor/End Nodes */}
         <svg
           viewBox="0 0 560 420"
           style={{
@@ -160,28 +162,6 @@ export const BrainCognitiveDiagram: React.FC = () => {
                 <stop offset="100%" stopColor={item.accentBg} stopOpacity="1" />
               </linearGradient>
             ))}
-
-            {/* Arrowhead Markers Pointing Towards Badges */}
-            {CALLOUTS.map((item) => {
-              const isLeft = item.position.endsWith('left');
-              return (
-                <marker
-                  key={`arrow-${item.id}`}
-                  id={`arrow-${item.id}`}
-                  viewBox="0 0 10 10"
-                  refX={isLeft ? '2' : '8'}
-                  refY="5"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path
-                    d={isLeft ? "M 10 1 L 2 5 L 10 9 Z" : "M 0 1 L 8 5 L 0 9 Z"}
-                    fill={item.color}
-                  />
-                </marker>
-              );
-            })}
           </defs>
 
           {CALLOUTS.map((item) => {
@@ -190,11 +170,11 @@ export const BrainCognitiveDiagram: React.FC = () => {
 
             // Polyline path: Node -> Elbow -> Badge
             const pathD = `M ${item.nodeX} ${item.nodeY} L ${item.elbowX} ${item.badgeY} L ${item.badgeX} ${item.badgeY}`;
-            const flowDuration = 1.1; // Smooth fluid flow duration (seconds)
+            const endNodeAppearDelay = item.drawDelay + flowDuration - 0.05;
 
             return (
               <g key={item.id}>
-                {/* 1. White Background Fluid Shadow Path */}
+                {/* 1. White Background Shadow Line */}
                 <path
                   d={pathD}
                   fill="none"
@@ -205,12 +185,12 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeDasharray="360"
                   strokeDashoffset="360"
                   style={{
-                    animation: `waterFlowStream ${flowDuration}s cubic-bezier(0.35, 0, 0.25, 1) ${item.drawDelay}s forwards`,
+                    animation: `waterFlowStreamSlow ${flowDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.drawDelay}s forwards`,
                     opacity: 0.95,
                   }}
                 />
 
-                {/* 2. Fluid Water Stream Arrow Line (Flows out like water) */}
+                {/* 2. Fluid Water Stream Line (Flows slowly from start node to end node) */}
                 <path
                   d={pathD}
                   fill="none"
@@ -220,26 +200,40 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeLinejoin="round"
                   strokeDasharray="360"
                   strokeDashoffset="360"
-                  markerEnd={`url(#arrow-${item.id})`}
                   style={{
-                    animation: `waterFlowStream ${flowDuration}s cubic-bezier(0.35, 0, 0.25, 1) ${item.drawDelay}s forwards`,
+                    animation: `waterFlowStreamSlow ${flowDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.drawDelay}s forwards`,
                     opacity: activeHover && !isHovered ? 0.35 : 1,
                     transition: 'stroke-width 0.3s ease, opacity 0.3s ease',
                   }}
                 />
 
-                {/* 3. Static Clean White Anchor Node Dot on Brain/Cube (NO pulsing bullets!) */}
+                {/* 3. START POINT: Clean Round Circle Dot on Brain/Cube */}
                 <g style={{ opacity: 0, animation: `nodeAppear 0.4s ease-out ${item.drawDelay}s forwards` }}>
-                  {/* Clean Static White Anchor Circle with colored stroke */}
                   <circle
                     cx={item.nodeX}
                     cy={item.nodeY}
-                    r={isHovered ? 6 : 5}
+                    r={isHovered ? 6.5 : 5}
                     fill="#ffffff"
                     stroke={item.color}
                     strokeWidth="3"
                     style={{
-                      filter: `drop-shadow(0 2px 4px ${item.color}44)`,
+                      filter: `drop-shadow(0 2px 5px ${item.color}44)`,
+                      transition: 'all 0.3s ease',
+                    }}
+                  />
+                </g>
+
+                {/* 4. END POINT: Clean Round Circle Dot near Badge (Appears right when line arrives) */}
+                <g style={{ opacity: 0, animation: `nodeAppear 0.4s ease-out ${endNodeAppearDelay}s forwards` }}>
+                  <circle
+                    cx={item.badgeX}
+                    cy={item.badgeY}
+                    r={isHovered ? 6.5 : 5}
+                    fill="#ffffff"
+                    stroke={item.color}
+                    strokeWidth="3"
+                    style={{
+                      filter: `drop-shadow(0 2px 5px ${item.color}44)`,
                       transition: 'all 0.3s ease',
                     }}
                   />
@@ -249,7 +243,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
           })}
         </svg>
 
-        {/* HTML Callout Badges Layer (Appears ONE-SHOT right after water arrow reaches endpoint) */}
+        {/* HTML Callout Badges Layer (Appears ONE-SHOT right when line reaches the end circle dot) */}
         <div
           style={{
             position: 'absolute',
@@ -262,7 +256,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
             const isHovered = activeHover === item.id;
             const isTop = item.position.startsWith('top');
             const isLeft = item.position.endsWith('left');
-            const badgeAppearDelay = item.drawDelay + 0.95; // Triggers right when water stream arrives
+            const badgeAppearDelay = item.drawDelay + flowDuration; // Triggers right when line reaches end dot
 
             return (
               <div
@@ -277,7 +271,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   pointerEvents: 'auto',
                   cursor: 'pointer',
                   opacity: 0,
-                  animation: `badgePopOneShot 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${badgeAppearDelay}s forwards`,
+                  animation: `badgePopOneShot 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${badgeAppearDelay}s forwards`,
                   transform: isHovered ? 'scale(1.05)' : 'scale(1)',
                   transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
                 }}
