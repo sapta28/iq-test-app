@@ -21,14 +21,14 @@ export const MatrixCellSVG: React.FC<MatrixCellSVGProps> = ({
         className={`w-full h-full rounded-xl transition-all duration-300 ${className}`}
         style={{ width: '100%', height: '100%' }}
       >
-        <rect x="2" y="2" width="96" height="96" rx="12" fill="#1E293B" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
+        <rect x="2" y="2" width="96" height="96" rx="12" fill="#F1F5F9" stroke="#94A3B8" strokeWidth="2" strokeDasharray="4 4" />
         <text
           x="50"
           y="62"
           textAnchor="middle"
           fontSize="36"
           fontWeight="bold"
-          fill="#818CF8"
+          fill="#00A67C"
           className="animate-pulse"
         >
           ?
@@ -43,22 +43,22 @@ export const MatrixCellSVG: React.FC<MatrixCellSVGProps> = ({
       className={`w-full h-full rounded-xl transition-all duration-200 ${className}`}
       style={{ width: '100%', height: '100%' }}
     >
-      {/* Background card */}
+      {/* Background card - Clean crisp editorial style */}
       <rect
         x="2"
         y="2"
         width="96"
         height="96"
         rx="12"
-        fill={spec.background || '#1E293B'}
-        stroke="#334155"
+        fill={spec.background || '#FFFFFF'}
+        stroke="#E2E8F0"
         strokeWidth="2"
       />
 
-      {/* Render shapes */}
+      {/* Render vector shapes */}
       {spec.shapes &&
         spec.shapes.map((shape, idx) => {
-          const stroke = shape.stroke || '#818CF8';
+          const stroke = shape.stroke || '#000626';
           const fill = shape.fill || 'none';
           const strokeWidth = shape.strokeWidth || 3;
           const transform = shape.rotation ? `rotate(${shape.rotation} 50 50)` : undefined;

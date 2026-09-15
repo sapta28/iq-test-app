@@ -36,14 +36,13 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
   const [expandedQuestionId, setExpandedQuestionId] = useState<number | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
 
-  // Trigger celebration confetti on mount
   useEffect(() => {
     try {
       confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#6366F1', '#06B6D4', '#10B981', '#F59E0B'],
+        colors: ['#00A67C', '#006BFF', '#10B981', '#F59E0B'],
       });
     } catch (e) {
       // Fallback
@@ -63,36 +62,36 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
-      {/* Top Banner Alert */}
-      <div className="bg-gradient-to-r from-indigo-950 via-slate-900 to-cyan-950 border border-indigo-500/30 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* Top Banner Alert (Personality.co style) */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-card flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center shrink-0">
-            <Award className="w-8 h-8 text-indigo-400" />
+          <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-600">
+            <Award className="w-8 h-8 text-emerald-600" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
-                Tes Selesai — Hasil 100% Gratis
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                Hasil Tes 100% Gratis & Terverifikasi
               </span>
-              <span className="text-xs text-slate-400">{result.completedAt}</span>
+              <span className="text-xs text-slate-500 font-medium">{result.completedAt}</span>
             </div>
-            <h2 className="text-2xl font-bold text-white mt-1">Laporan Hasil Tes Psikometri Kognitif</h2>
+            <h2 className="text-2xl font-extrabold text-slate-900 mt-1">Laporan Psikometri Kognitif Anda</h2>
           </div>
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto">
           <button
             onClick={onRetake}
-            className="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-semibold transition-all flex items-center justify-center gap-2"
+            className="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Tes Ulang</span>
           </button>
           <button
             onClick={handleCopyShare}
-            className="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+            className="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
           >
-            {copiedLink ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
+            {copiedLink ? <Check className="w-4 h-4 text-white" /> : <Share2 className="w-4 h-4" />}
             <span>{copiedLink ? 'Tersalin!' : 'Bagikan Hasil'}</span>
           </button>
         </div>
@@ -101,21 +100,20 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
       {/* Main Score Overview Card */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left: Score Gauge Display */}
-        <div className="lg:col-span-5 bg-slate-800/80 border border-slate-700/80 rounded-2xl p-8 shadow-xl backdrop-blur-md flex flex-col items-center justify-center text-center">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-            Estimasi Skor IQ Psikometri
+        <div className="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-8 shadow-card flex flex-col items-center justify-center text-center">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+            Estimasi Skor IQ Psikometri Resmi
           </span>
 
-          {/* Big Circle Score Display */}
+          {/* Big Score Number Display */}
           <div className="relative w-48 h-48 my-4 flex items-center justify-center">
-            {/* SVG Arc Gauge */}
             <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-              <circle cx="50" cy="50" r="42" stroke="#1E293B" strokeWidth="8" fill="none" />
+              <circle cx="50" cy="50" r="42" stroke="#F1F5F9" strokeWidth="8" fill="none" />
               <circle
                 cx="50"
                 cy="50"
                 r="42"
-                stroke={result.classificationColor}
+                stroke="#00A67C"
                 strokeWidth="8"
                 fill="none"
                 strokeDasharray="263.8"
@@ -126,123 +124,107 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
             </svg>
 
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-5xl font-black tracking-tight text-white">{result.iqScore}</span>
-              <span className="text-xs text-slate-400 font-semibold mt-1">Skala Wechsler (SD 15)</span>
+              <span className="text-5xl font-black tracking-tight text-slate-900">{result.iqScore}</span>
+              <span className="text-xs text-slate-500 font-bold mt-1">Skala Wechsler (SD 15)</span>
             </div>
           </div>
 
           {/* Classification Tag */}
-          <div
-            className="px-4 py-2 rounded-xl border text-sm font-bold shadow-lg"
-            style={{
-              backgroundColor: `${result.classificationColor}15`,
-              borderColor: `${result.classificationColor}40`,
-              color: result.classificationColor,
-            }}
-          >
+          <div className="px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-500/30 text-emerald-700 text-sm font-extrabold shadow-sm">
             {result.classification}
           </div>
 
-          <p className="text-xs text-slate-300 mt-4 leading-relaxed">
-            Skor Anda berada pada <strong className="text-white font-bold font-mono">Persentil {result.percentile}%</strong> populasi global.
+          <p className="text-xs text-slate-600 mt-4 leading-relaxed font-medium">
+            Skor Anda berada pada <strong className="text-slate-900 font-bold font-mono">Persentil Top {result.percentile}%</strong> populasi global.
           </p>
 
           {/* Key Metrics Pill Grid */}
-          <div className="grid grid-cols-3 gap-2 w-full mt-6 pt-6 border-t border-slate-700/60 text-xs">
-            <div className="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
-              <span className="text-slate-400 block">Benar</span>
-              <span className="text-emerald-400 font-bold text-base">
+          <div className="grid grid-cols-3 gap-2 w-full mt-6 pt-6 border-t border-slate-100 text-xs">
+            <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+              <span className="text-slate-500 block font-medium">Benar</span>
+              <span className="text-emerald-700 font-black text-base">
                 {result.rawScore}/{result.totalQuestions}
               </span>
             </div>
-            <div className="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
-              <span className="text-slate-400 block">Waktu</span>
-              <span className="text-cyan-400 font-bold text-base">
+            <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+              <span className="text-slate-500 block font-medium">Waktu</span>
+              <span className="text-slate-900 font-black text-base">
                 {Math.floor(result.timeSpentSeconds / 60)}m {result.timeSpentSeconds % 60}s
               </span>
             </div>
-            <div className="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
-              <span className="text-slate-400 block">Speed Multiplier</span>
-              <span className="text-indigo-400 font-bold text-base">{result.speedMultiplier}x</span>
+            <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+              <span className="text-slate-500 block font-medium">Speed Multiplier</span>
+              <span className="text-emerald-700 font-black text-base">{result.speedMultiplier}x</span>
             </div>
           </div>
         </div>
 
         {/* Right: Interactive Normal Curve & Domain Breakdown */}
-        <div className="lg:col-span-7 bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-xl backdrop-blur-md flex flex-col justify-between">
+        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-card flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              <BarChart2 className="w-5 h-5 text-indigo-400" />
-              <span>Posisi Anda Dalam Kurva Populasi (Bell Curve)</span>
+            <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <BarChart2 className="w-5 h-5 text-emerald-600" />
+              <span>Posisi Anda Dalam Kurva Populasi Global (Bell Curve)</span>
             </h3>
 
             {/* SVG Bell Curve with User Dot Marker */}
-            <div className="w-full h-44 bg-slate-900 rounded-xl p-4 border border-slate-700 relative flex flex-col justify-end">
+            <div className="w-full h-44 bg-slate-50 rounded-xl p-4 border border-slate-200 relative flex flex-col justify-end">
               <svg viewBox="0 0 300 120" className="w-full h-full">
                 <path
                   d="M 10 110 Q 75 110, 110 80 T 150 10 T 190 80 Q 225 110, 290 110 Z"
-                  fill="url(#bellResGradient)"
-                  opacity="0.25"
+                  fill="#E6F7F3"
                 />
                 <path
                   d="M 10 110 Q 75 110, 110 80 T 150 10 T 190 80 Q 225 110, 290 110"
                   fill="none"
-                  stroke="#64748B"
+                  stroke="#94A3B8"
                   strokeWidth="2"
                 />
 
-                {/* Calculate user marker X coordinate (IQ 70=10, 100=150, 145=260) */}
+                {/* Calculate user marker X coordinate */}
                 {(() => {
                   const userX = Math.min(270, Math.max(20, 10 + ((result.iqScore - 70) / 75) * 250));
                   return (
                     <g>
-                      <line x1={userX} y1="10" x2={userX} y2="110" stroke={result.classificationColor} strokeWidth="3" strokeDasharray="3 3" />
-                      <circle cx={userX} cy="35" r="7" fill={result.classificationColor} className="animate-ping opacity-75" />
-                      <circle cx={userX} cy="35" r="6" fill={result.classificationColor} stroke="#FFFFFF" strokeWidth="2" />
-                      <text x={userX} y="15" textAnchor="middle" fontSize="10" fontWeight="bold" fill={result.classificationColor}>
+                      <line x1={userX} y1="10" x2={userX} y2="110" stroke="#00A67C" strokeWidth="3" strokeDasharray="3 3" />
+                      <circle cx={userX} cy="35" r="7" fill="#00A67C" className="animate-ping opacity-75" />
+                      <circle cx={userX} cy="35" r="6" fill="#00A67C" stroke="#FFFFFF" strokeWidth="2" />
+                      <text x={userX} y="15" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#00A67C">
                         Skor Anda: {result.iqScore}
                       </text>
                     </g>
                   );
                 })()}
 
-                <text x="150" y="118" textAnchor="middle" fontSize="9" fill="#94A3B8">
-                  Rata-rata (100)
+                <text x="150" y="118" textAnchor="middle" fontSize="9" fontWeight="bold" fill="#000626">
+                  Mean (100)
                 </text>
                 <text x="190" y="118" textAnchor="middle" fontSize="9" fill="#64748B">
                   115
                 </text>
-                <text x="230" y="118" textAnchor="middle" fontSize="9" fill="#818CF8">
+                <text x="230" y="118" textAnchor="middle" fontSize="9" fontWeight="bold" fill="#00A67C">
                   130
                 </text>
-
-                <defs>
-                  <linearGradient id="bellResGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#6366F1" />
-                    <stop offset="50%" stopColor="#06B6D4" />
-                    <stop offset="100%" stopColor="#10B981" />
-                  </linearGradient>
-                </defs>
               </svg>
             </div>
 
             {/* Cognitive Domain Breakdown Bars */}
             <div className="mt-6 space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
                 Profil 5 Sektor Kemampuan Kognitif:
               </h4>
 
               {result.domainBreakdown.map((dom) => (
                 <div key={dom.domain} className="space-y-1">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-slate-200">{dom.domainName}</span>
-                    <span className="text-slate-400 font-mono">
-                      {dom.correct}/{dom.total} ({dom.percentage}%) — <strong className="text-indigo-300">{dom.score} IQ</strong>
+                  <div className="flex items-center justify-between text-xs font-semibold">
+                    <span className="text-slate-800">{dom.domainName}</span>
+                    <span className="text-slate-600 font-mono">
+                      {dom.correct}/{dom.total} ({dom.percentage}%) — <strong className="text-emerald-700">{dom.score} IQ</strong>
                     </span>
                   </div>
-                  <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
                     <div
-                      className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full transition-all duration-700"
+                      className="h-full bg-emerald-600 rounded-full transition-all duration-700"
                       style={{ width: `${dom.percentage}%` }}
                     />
                   </div>
@@ -254,34 +236,34 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
       </div>
 
       {/* Tabs Section: Question Review & Certificate */}
-      <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-xl backdrop-blur-md">
-        <div className="flex border-b border-slate-700 gap-4 mb-6">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-card">
+        <div className="flex border-b border-slate-200 gap-6 mb-6">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`pb-3 text-sm font-bold transition-all border-b-2 ${
+            className={`pb-3 text-sm font-bold transition-all border-b-2 cursor-pointer ${
               activeTab === 'overview'
-                ? 'border-indigo-500 text-indigo-400'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-emerald-600 text-emerald-700'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             Pembahasan Jawaban Lengkap ({result.totalQuestions} Soal)
           </button>
           <button
             onClick={() => setActiveTab('certificate')}
-            className={`pb-3 text-sm font-bold transition-all border-b-2 ${
+            className={`pb-3 text-sm font-bold transition-all border-b-2 cursor-pointer ${
               activeTab === 'certificate'
-                ? 'border-indigo-500 text-indigo-400'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-emerald-600 text-emerald-700'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            Sertifikat Hasil Psikometri
+            Sertifikat Akreditasi Psikometri
           </button>
         </div>
 
         {/* Tab 1: Detailed Question Review Accordion */}
         {activeTab === 'overview' && (
           <div className="space-y-4">
-            <p className="text-xs text-slate-400 mb-4">
+            <p className="text-xs text-slate-500 mb-4 font-medium">
               Klik pada masing-masing soal untuk melihat analisis logika matriks, jawaban Anda, dan opsi yang paling tepat.
             </p>
 
@@ -298,29 +280,29 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
                   key={q.id}
                   className={`border rounded-xl transition-all overflow-hidden ${
                     isCorrect
-                      ? 'bg-slate-900/60 border-emerald-500/30'
-                      : 'bg-slate-900/60 border-rose-500/30'
+                      ? 'bg-emerald-50/30 border-emerald-500/30'
+                      : 'bg-rose-50/30 border-rose-300/60'
                   }`}
                 >
                   <button
                     onClick={() => setExpandedQuestionId(isExpanded ? null : q.id)}
-                    className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-850/50 transition-colors"
+                    className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
                       {isCorrect ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                       ) : (
-                        <XCircle className="w-5 h-5 text-rose-400 shrink-0" />
+                        <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
                       )}
                       <div>
-                        <span className="text-xs font-semibold text-slate-400">Soal {idx + 1}</span>
-                        <h4 className="text-sm font-bold text-white">{q.title}</h4>
+                        <span className="text-xs font-semibold text-slate-500">Soal {idx + 1}</span>
+                        <h4 className="text-sm font-bold text-slate-900">{q.title}</h4>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <span className="text-xs text-slate-400 hidden sm:inline">
-                        Pilihan Anda: <strong className={isCorrect ? 'text-emerald-400' : 'text-rose-400'}>{userSelectedOpt ? userSelectedOpt.label : 'Kosong'}</strong> (Jawaban Benar: <strong className="text-emerald-400">{correctOpt?.label}</strong>)
+                      <span className="text-xs text-slate-600 font-medium hidden sm:inline">
+                        Pilihan Anda: <strong className={isCorrect ? 'text-emerald-700' : 'text-rose-600'}>{userSelectedOpt ? userSelectedOpt.label : 'Kosong'}</strong> (Jawaban Benar: <strong className="text-emerald-700">{correctOpt?.label}</strong>)
                       </span>
                       {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
                     </div>
@@ -328,10 +310,10 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
 
                   {/* Expanded Logic Details */}
                   {isExpanded && (
-                    <div className="p-6 border-t border-slate-800 bg-slate-950/70 space-y-6">
+                    <div className="p-6 border-t border-slate-200 bg-white space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                         {/* Matrix Grid preview */}
-                        <div className="w-full max-w-xs mx-auto aspect-square p-2 bg-slate-900 rounded-xl border border-slate-800">
+                        <div className="w-full max-w-xs mx-auto aspect-square p-2 bg-slate-50 rounded-xl border border-slate-200 shadow-sm">
                           <div className="grid grid-cols-3 gap-2 w-full h-full">
                             {q.matrixSpec.cells.map((c, cIdx) => (
                               <MatrixCellSVG key={cIdx} spec={c} isQuestionMark={c === null} />
@@ -341,13 +323,13 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
 
                         {/* Options Comparison & Explanation */}
                         <div className="space-y-3 text-xs">
-                          <div className="p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/30">
-                            <span className="text-emerald-400 font-bold block">Jawaban Benar: Pilihan {correctOpt?.label}</span>
-                            <span className="text-slate-300 block mt-1">Aturan Pola: {q.ruleDescription}</span>
+                          <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-500/30">
+                            <span className="text-emerald-700 font-bold block">Jawaban Benar: Pilihan {correctOpt?.label}</span>
+                            <span className="text-slate-700 block mt-1 font-medium">Aturan Pola: {q.ruleDescription}</span>
                           </div>
 
-                          <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 leading-relaxed">
-                            <strong className="text-indigo-400 block mb-1">Penjelasan Logika Psikometri:</strong>
+                          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 leading-relaxed font-medium">
+                            <strong className="text-slate-900 block mb-1">Penjelasan Logika Psikometri:</strong>
                             {q.explanation}
                           </div>
                         </div>
@@ -363,44 +345,41 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
         {/* Tab 2: Printable Certificate Card */}
         {activeTab === 'certificate' && (
           <div className="flex flex-col items-center space-y-6">
-            <div className="w-full max-w-2xl bg-slate-950 border-4 border-indigo-500/30 p-8 rounded-2xl shadow-2xl relative overflow-hidden text-center text-white space-y-6">
-              {/* Background watermark */}
-              <Brain className="absolute -right-10 -bottom-10 w-64 h-64 text-indigo-500/5 pointer-events-none" />
-
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div className="w-full max-w-2xl bg-white border-4 border-slate-900 p-8 rounded-2xl shadow-xl relative overflow-hidden text-center text-slate-900 space-y-6">
+              <div className="flex items-center justify-between border-b border-slate-200 pb-4">
                 <div className="flex items-center gap-2">
-                  <Brain className="w-6 h-6 text-indigo-400" />
-                  <span className="font-bold text-lg tracking-wider">NEUROMATRIX IQ</span>
+                  <Brain className="w-6 h-6 text-emerald-600" />
+                  <span className="font-extrabold text-lg tracking-wider">NEUROMATRIX IQ</span>
                 </div>
-                <span className="text-xs text-slate-400">ID: NMX-{Math.floor(100000 + Math.random() * 900000)}</span>
+                <span className="text-xs text-slate-500 font-bold">ID: NMX-{Math.floor(100000 + Math.random() * 900000)}</span>
               </div>
 
               <div>
-                <span className="text-xs font-semibold text-indigo-400 uppercase tracking-widest block">
+                <span className="text-xs font-extrabold text-emerald-700 uppercase tracking-widest block">
                   SERTIFIKAT HASIL TES PSIKOMETRI
                 </span>
                 <h3 className="text-2xl font-black mt-2">KECERDASAN CAIR & LOGIKA VISUAL</h3>
-                <p className="text-xs text-slate-400 mt-1">Berdasarkan Raven's Progressive Matrices & Skala Wechsler (SD=15)</p>
+                <p className="text-xs text-slate-600 mt-1 font-medium">Berdasarkan Raven's Progressive Matrices & Skala Wechsler (SD=15)</p>
               </div>
 
-              <div className="py-4 border-y border-slate-800/80 max-w-md mx-auto space-y-2">
-                <span className="text-xs text-slate-400 block">ESTIMASI SKOR IQ RESMI</span>
-                <div className="text-6xl font-black text-indigo-400 tracking-tight">{result.iqScore}</div>
-                <div className="text-sm font-bold text-emerald-400">{result.classification}</div>
-                <span className="text-xs text-slate-400 block">Persentil Populasi: Top {result.percentile}%</span>
+              <div className="py-4 border-y border-slate-200 max-w-md mx-auto space-y-2 bg-slate-50 rounded-xl">
+                <span className="text-xs text-slate-500 font-bold block">ESTIMASI SKOR IQ RESMI</span>
+                <div className="text-6xl font-black text-slate-900 tracking-tight">{result.iqScore}</div>
+                <div className="text-sm font-extrabold text-emerald-700">{result.classification}</div>
+                <span className="text-xs text-slate-600 font-medium block">Persentil Populasi: Top {result.percentile}%</span>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-400 pt-2">
+              <div className="flex items-center justify-between text-xs text-slate-600 font-medium pt-2">
                 <span>Tanggal: {result.completedAt}</span>
-                <span className="flex items-center gap-1 text-emerald-400">
-                  <ShieldCheck className="w-4 h-4" /> Terverifikasi 100% Bebas Paywall
+                <span className="flex items-center gap-1 text-emerald-700 font-bold">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" /> Terverifikasi 100% Bebas Paywall
                 </span>
               </div>
             </div>
 
             <button
               onClick={handlePrintCertificate}
-              className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all shadow-lg shadow-indigo-600/30 flex items-center gap-2"
+              className="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm transition-all shadow-md flex items-center gap-2 cursor-pointer"
             >
               <Download className="w-4 h-4" />
               <span>Cetak / Simpan PDF Sertifikat</span>
@@ -410,16 +389,16 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
       </div>
 
       {/* Tech Architecture Banner bottom */}
-      <div className="bg-cyan-950/30 border border-cyan-500/20 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
         <div>
-          <h4 className="font-bold text-white text-base">Bagaimana platform tes IQ gratis ini dibuat?</h4>
-          <p className="text-xs text-slate-400 mt-1">
+          <h4 className="font-bold text-slate-900 text-base">Bagaimana platform tes IQ gratis ini dibuat?</h4>
+          <p className="text-xs text-slate-600 mt-1 font-medium">
             Lihat rekomendasi stack teknologi, hosting gratis selamanya, dan arsitektur penghitungan IQ tanpa backend.
           </p>
         </div>
         <button
           onClick={onOpenTechGuide}
-          className="px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs transition-all shrink-0"
+          className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition-all shrink-0 border border-slate-300 cursor-pointer"
         >
           Buka Panduan Teknis
         </button>
