@@ -94,12 +94,12 @@ const CALLOUTS: CalloutItem[] = [
     cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
     nodeX: 325, // Placed precisely on the lower Rubik's cube tile
-    nodeY: 280,
-    elbowX: 385,
-    badgeX: 415,
-    badgeY: 318, // Shifted higher up
+    nodeY: 282,
+    elbowX: 400,
+    badgeX: 435,
+    badgeY: 275, // Lifted significantly higher up!
     position: 'bottom-right',
-    badgeOffsetStyle: { right: '-24px' }, // Shifted further right to prevent overlapping
+    badgeOffsetStyle: { right: '-52px' }, // Shifted significantly further right!
     startDotDelay: 5.7,
     lineDelay: 6.0,
     badgeDelay: 7.1,
