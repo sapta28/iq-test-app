@@ -93,13 +93,13 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#6d28d9',
     cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
-    nodeX: 325, // Placed precisely on the lower Rubik's cube tile
-    nodeY: 282,
-    elbowX: 390,
-    badgeX: 425,
-    badgeY: 300, // Balanced height (lowered slightly from 275)
+    nodeX: 305, // Placed precisely on the lower Rubik's cube tile
+    nodeY: 300,
+    elbowX: 370,
+    badgeX: 395,
+    badgeY: 326, // Vertically aligned with pink badge at y=326!
     position: 'bottom-right',
-    badgeOffsetStyle: { right: '-44px' }, // Shifted right for zero overlap
+    badgeOffsetStyle: { right: '-24px' },
     startDotDelay: 5.7,
     lineDelay: 6.0,
     badgeDelay: 7.1,
