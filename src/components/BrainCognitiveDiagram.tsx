@@ -76,7 +76,7 @@ const CALLOUTS: CalloutItem[] = [
     nodeX: 195,
     nodeY: 245,
     elbowX: 165,
-    badgeX: 140, // Corrected: Flows consistently to the LEFT towards bottom-left badge
+    badgeX: 140,
     badgeY: 326,
     position: 'bottom-left',
     badgeOffsetStyle: { left: '8px' },
@@ -93,13 +93,13 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#6d28d9',
     cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
-    nodeX: 305,
-    nodeY: 310,
-    elbowX: 365,
-    badgeX: 390,
-    badgeY: 348,
+    nodeX: 325, // Placed precisely on the lower Rubik's cube tile
+    nodeY: 280,
+    elbowX: 385,
+    badgeX: 415,
+    badgeY: 318, // Shifted higher up
     position: 'bottom-right',
-    badgeOffsetStyle: { right: '8px' },
+    badgeOffsetStyle: { right: '-24px' }, // Shifted further right to prevent overlapping
     startDotDelay: 5.7,
     lineDelay: 6.0,
     badgeDelay: 7.1,
