@@ -16,16 +16,19 @@ interface CalloutItem {
   badgeX: number; // End point near badge
   badgeY: number;
   position: 'top-left' | 'bottom-left' | 'top-right' | 'bottom-right';
-  drawDelay: number; // Delay in seconds for slow sequential draw start
+  startDotDelay: number;
+  lineDelay: number;
+  badgeDelay: number;
 }
 
+// 1. Biru (Blue) -> 2. Kuning (Yellow) -> 3. Merah/Pink (Red) -> 4. Ungu (Purple)
 const CALLOUTS: CalloutItem[] = [
   {
     id: 'frontal-lobe',
     title: 'Penalaran Logika',
     subtitle: 'Frontal Lobe (Analisis & Logika)',
     icon: 'psychology',
-    color: '#2563eb', // Blue
+    color: '#2563eb', // BIRU (Blue)
     accentBg: '#1d4ed8',
     cardBg: 'rgba(239, 246, 255, 0.96)',
     borderColor: '#93c5fd',
@@ -35,14 +38,16 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 180,
     badgeY: 76,
     position: 'top-left',
-    drawDelay: 0.3, // 1st line: 0.3s -> 1.6s
+    startDotDelay: 0.3,
+    lineDelay: 0.6,
+    badgeDelay: 1.7,
   },
   {
     id: 'spatial-vis',
     title: 'Visualisasi Spasial',
     subtitle: 'Spatial Reasoning (Rotasi 3D)',
     icon: 'view_in_ar',
-    color: '#d97706', // Amber / Gold
+    color: '#d97706', // KUNING (Yellow / Gold)
     accentBg: '#b45309',
     cardBg: 'rgba(254, 252, 232, 0.96)',
     borderColor: '#fde68a',
@@ -52,14 +57,16 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 380,
     badgeY: 76,
     position: 'top-right',
-    drawDelay: 2.1, // 2nd line: 2.1s -> 3.4s
+    startDotDelay: 2.1,
+    lineDelay: 2.4,
+    badgeDelay: 3.5,
   },
   {
     id: 'parietal-lobe',
     title: 'Kecepatan Pemrosesan',
     subtitle: 'Parietal Lobe (Atensi & Efisiensi)',
     icon: 'settings_suggest',
-    color: '#db2777', // Pink/Magenta
+    color: '#db2777', // MERAH / PINK (Red/Pink)
     accentBg: '#be185d',
     cardBg: 'rgba(253, 242, 248, 0.96)',
     borderColor: '#fbcfe8',
@@ -69,14 +76,16 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 180,
     badgeY: 308,
     position: 'bottom-left',
-    drawDelay: 3.9, // 3rd line: 3.9s -> 5.2s
+    startDotDelay: 3.9,
+    lineDelay: 4.2,
+    badgeDelay: 5.3,
   },
   {
     id: 'problem-solving',
     title: 'Pemecahan Masalah',
     subtitle: 'Problem Solving (Fleksibilitas)',
     icon: 'extension',
-    color: '#7c3aed', // Purple
+    color: '#7c3aed', // UNGU (Purple)
     accentBg: '#6d28d9',
     cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
@@ -86,14 +95,16 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 380,
     badgeY: 332,
     position: 'bottom-right',
-    drawDelay: 5.7, // 4th line: 5.7s -> 7.0s
+    startDotDelay: 5.7,
+    lineDelay: 6.0,
+    badgeDelay: 7.1,
   },
 ];
 
 export const BrainCognitiveDiagram: React.FC = () => {
   const [activeHover, setActiveHover] = useState<string | null>(null);
 
-  const flowDuration = 1.3; // Unhurried slow fluid flow duration per line (seconds)
+  const lineDuration = 1.1; // Line flow duration (seconds)
 
   return (
     <div
@@ -170,7 +181,6 @@ export const BrainCognitiveDiagram: React.FC = () => {
 
             // Polyline path: Node -> Elbow -> Badge
             const pathD = `M ${item.nodeX} ${item.nodeY} L ${item.elbowX} ${item.badgeY} L ${item.badgeX} ${item.badgeY}`;
-            const endNodeAppearDelay = item.drawDelay + flowDuration - 0.05;
 
             return (
               <g key={item.id}>
@@ -185,12 +195,12 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeDasharray="360"
                   strokeDashoffset="360"
                   style={{
-                    animation: `waterFlowStreamSlow ${flowDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.drawDelay}s forwards`,
+                    animation: `lineFlowSequential ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
                     opacity: 0.95,
                   }}
                 />
 
-                {/* 2. Fluid Water Stream Line (Flows slowly from start node to end node) */}
+                {/* 2. Main Fluid Line (Flows out from start node to end node) */}
                 <path
                   d={pathD}
                   fill="none"
@@ -201,14 +211,14 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeDasharray="360"
                   strokeDashoffset="360"
                   style={{
-                    animation: `waterFlowStreamSlow ${flowDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.drawDelay}s forwards`,
+                    animation: `lineFlowSequential ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
                     opacity: activeHover && !isHovered ? 0.35 : 1,
                     transition: 'stroke-width 0.3s ease, opacity 0.3s ease',
                   }}
                 />
 
-                {/* 3. START POINT: Clean Round Circle Dot on Brain/Cube */}
-                <g style={{ opacity: 0, animation: `nodeAppear 0.4s ease-out ${item.drawDelay}s forwards` }}>
+                {/* 3. START POINT: Node Dot Blurs-In DIRECTLY at position (NO sliding) */}
+                <g style={{ opacity: 0, animation: `dotBlurIn 0.4s ease-out ${item.startDotDelay}s forwards` }}>
                   <circle
                     cx={item.nodeX}
                     cy={item.nodeY}
@@ -223,8 +233,8 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   />
                 </g>
 
-                {/* 4. END POINT: Clean Round Circle Dot near Badge (Appears right when line arrives) */}
-                <g style={{ opacity: 0, animation: `nodeAppear 0.4s ease-out ${endNodeAppearDelay}s forwards` }}>
+                {/* 4. END POINT: Round Circle Dot Blurs-In DIRECTLY at badge position when line arrives */}
+                <g style={{ opacity: 0, animation: `dotBlurIn 0.4s ease-out ${item.badgeDelay}s forwards` }}>
                   <circle
                     cx={item.badgeX}
                     cy={item.badgeY}
@@ -243,7 +253,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
           })}
         </svg>
 
-        {/* HTML Callout Badges Layer (Appears ONE-SHOT right when line reaches the end circle dot) */}
+        {/* HTML Callout Badges Layer (Blurs & pops in directly after line finishes flowing) */}
         <div
           style={{
             position: 'absolute',
@@ -256,7 +266,6 @@ export const BrainCognitiveDiagram: React.FC = () => {
             const isHovered = activeHover === item.id;
             const isTop = item.position.startsWith('top');
             const isLeft = item.position.endsWith('left');
-            const badgeAppearDelay = item.drawDelay + flowDuration; // Triggers right when line reaches end dot
 
             return (
               <div
@@ -271,7 +280,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   pointerEvents: 'auto',
                   cursor: 'pointer',
                   opacity: 0,
-                  animation: `badgePopOneShot 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${badgeAppearDelay}s forwards`,
+                  animation: `badgeBlurPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${item.badgeDelay}s forwards`,
                   transform: isHovered ? 'scale(1.05)' : 'scale(1)',
                   transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
                 }}
