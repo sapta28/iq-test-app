@@ -16,7 +16,7 @@ interface CalloutItem {
   badgeX: number; // End point near badge
   badgeY: number;
   position: 'top-left' | 'bottom-left' | 'top-right' | 'bottom-right';
-  drawDelay: number; // Delay in seconds for one-shot draw start
+  drawDelay: number; // Delay in seconds for fluid draw start
 }
 
 const CALLOUTS: CalloutItem[] = [
@@ -27,7 +27,7 @@ const CALLOUTS: CalloutItem[] = [
     icon: 'psychology',
     color: '#2563eb', // Blue
     accentBg: '#1d4ed8',
-    cardBg: 'rgba(239, 246, 255, 0.95)',
+    cardBg: 'rgba(239, 246, 255, 0.96)',
     borderColor: '#93c5fd',
     nodeX: 228,
     nodeY: 118,
@@ -44,7 +44,7 @@ const CALLOUTS: CalloutItem[] = [
     icon: 'view_in_ar',
     color: '#d97706', // Amber / Gold
     accentBg: '#b45309',
-    cardBg: 'rgba(254, 252, 232, 0.95)',
+    cardBg: 'rgba(254, 252, 232, 0.96)',
     borderColor: '#fde68a',
     nodeX: 342,
     nodeY: 118,
@@ -61,7 +61,7 @@ const CALLOUTS: CalloutItem[] = [
     icon: 'settings_suggest',
     color: '#db2777', // Pink/Magenta
     accentBg: '#be185d',
-    cardBg: 'rgba(253, 242, 248, 0.95)',
+    cardBg: 'rgba(253, 242, 248, 0.96)',
     borderColor: '#fbcfe8',
     nodeX: 202,
     nodeY: 272,
@@ -78,7 +78,7 @@ const CALLOUTS: CalloutItem[] = [
     icon: 'extension',
     color: '#7c3aed', // Purple
     accentBg: '#6d28d9',
-    cardBg: 'rgba(245, 243, 255, 0.95)',
+    cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
     nodeX: 322,
     nodeY: 298,
@@ -133,7 +133,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
           />
         </div>
 
-        {/* SVG Flowchart Lines & Anchor Nodes */}
+        {/* SVG Flowchart Water Arrows & Anchor Nodes */}
         <svg
           viewBox="0 0 560 420"
           style={{
@@ -146,19 +146,42 @@ export const BrainCognitiveDiagram: React.FC = () => {
           }}
         >
           <defs>
+            {/* Fluid Color Gradients */}
             {CALLOUTS.map((item) => (
               <linearGradient
                 key={`grad-${item.id}`}
-                id={`lineGrad-${item.id}`}
+                id={`waterGrad-${item.id}`}
                 x1="0%"
                 y1="0%"
                 x2="100%"
                 y2="100%"
               >
-                <stop offset="0%" stopColor={item.color} stopOpacity="0.9" />
+                <stop offset="0%" stopColor={item.color} stopOpacity="0.85" />
                 <stop offset="100%" stopColor={item.accentBg} stopOpacity="1" />
               </linearGradient>
             ))}
+
+            {/* Arrowhead Markers Pointing Towards Badges */}
+            {CALLOUTS.map((item) => {
+              const isLeft = item.position.endsWith('left');
+              return (
+                <marker
+                  key={`arrow-${item.id}`}
+                  id={`arrow-${item.id}`}
+                  viewBox="0 0 10 10"
+                  refX={isLeft ? '2' : '8'}
+                  refY="5"
+                  markerWidth="7"
+                  markerHeight="7"
+                  orient="auto"
+                >
+                  <path
+                    d={isLeft ? "M 10 1 L 2 5 L 10 9 Z" : "M 0 1 L 8 5 L 0 9 Z"}
+                    fill={item.color}
+                  />
+                </marker>
+              );
+            })}
           </defs>
 
           {CALLOUTS.map((item) => {
@@ -167,84 +190,66 @@ export const BrainCognitiveDiagram: React.FC = () => {
 
             // Polyline path: Node -> Elbow -> Badge
             const pathD = `M ${item.nodeX} ${item.nodeY} L ${item.elbowX} ${item.badgeY} L ${item.badgeX} ${item.badgeY}`;
-            const lineDuration = 0.9; // Line drawing duration (seconds)
+            const flowDuration = 1.1; // Smooth fluid flow duration (seconds)
 
             return (
               <g key={item.id}>
-                {/* 1. White Background Shadow Line */}
+                {/* 1. White Background Fluid Shadow Path */}
                 <path
                   d={pathD}
                   fill="none"
                   stroke="#ffffff"
-                  strokeWidth={strokeWidth + 2}
+                  strokeWidth={strokeWidth + 2.5}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray="350"
-                  strokeDashoffset="350"
+                  strokeDasharray="360"
+                  strokeDashoffset="360"
                   style={{
-                    animation: `lineDrawOneShot ${lineDuration}s cubic-bezier(0.25, 1, 0.5, 1) ${item.drawDelay}s forwards`,
+                    animation: `waterFlowStream ${flowDuration}s cubic-bezier(0.35, 0, 0.25, 1) ${item.drawDelay}s forwards`,
                     opacity: 0.95,
                   }}
                 />
 
-                {/* 2. Main Colored Line (One-shot draw from node to badge) */}
+                {/* 2. Fluid Water Stream Arrow Line (Flows out like water) */}
                 <path
                   d={pathD}
                   fill="none"
-                  stroke={`url(#lineGrad-${item.id})`}
+                  stroke={`url(#waterGrad-${item.id})`}
                   strokeWidth={strokeWidth}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray="350"
-                  strokeDashoffset="350"
+                  strokeDasharray="360"
+                  strokeDashoffset="360"
+                  markerEnd={`url(#arrow-${item.id})`}
                   style={{
-                    animation: `lineDrawOneShot ${lineDuration}s cubic-bezier(0.25, 1, 0.5, 1) ${item.drawDelay}s forwards`,
+                    animation: `waterFlowStream ${flowDuration}s cubic-bezier(0.35, 0, 0.25, 1) ${item.drawDelay}s forwards`,
                     opacity: activeHover && !isHovered ? 0.35 : 1,
                     transition: 'stroke-width 0.3s ease, opacity 0.3s ease',
                   }}
                 />
 
-                {/* 3. Initial Anchor Node Dot on Brain/Cube */}
+                {/* 3. Static Clean White Anchor Node Dot on Brain/Cube (NO pulsing bullets!) */}
                 <g style={{ opacity: 0, animation: `nodeAppear 0.4s ease-out ${item.drawDelay}s forwards` }}>
-                  {/* Outer Pulsing Ring */}
+                  {/* Clean Static White Anchor Circle with colored stroke */}
                   <circle
                     cx={item.nodeX}
                     cy={item.nodeY}
-                    r={isHovered ? 10 : 8}
-                    fill={item.color}
-                    opacity={0.3}
-                    className="animate-node-pulse"
-                  />
-                  {/* Inner White Anchor Dot */}
-                  <circle
-                    cx={item.nodeX}
-                    cy={item.nodeY}
-                    r={isHovered ? 6 : 4.5}
+                    r={isHovered ? 6 : 5}
                     fill="#ffffff"
                     stroke={item.color}
-                    strokeWidth="2.5"
+                    strokeWidth="3"
+                    style={{
+                      filter: `drop-shadow(0 2px 4px ${item.color}44)`,
+                      transition: 'all 0.3s ease',
+                    }}
                   />
                 </g>
-
-                {/* 4. End Point Node Dot near Badge */}
-                <circle
-                  cx={item.badgeX}
-                  cy={item.badgeY}
-                  r="3.5"
-                  fill="#ffffff"
-                  stroke={item.color}
-                  strokeWidth="2"
-                  style={{
-                    opacity: 0,
-                    animation: `nodeAppear 0.3s ease-out ${item.drawDelay + lineDuration - 0.1}s forwards`,
-                  }}
-                />
               </g>
             );
           })}
         </svg>
 
-        {/* HTML Callout Badges Layer (Appears ONE-SHOT right after line finishes drawing) */}
+        {/* HTML Callout Badges Layer (Appears ONE-SHOT right after water arrow reaches endpoint) */}
         <div
           style={{
             position: 'absolute',
@@ -257,7 +262,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
             const isHovered = activeHover === item.id;
             const isTop = item.position.startsWith('top');
             const isLeft = item.position.endsWith('left');
-            const badgeAppearDelay = item.drawDelay + 0.8; // Triggers right when line finishes
+            const badgeAppearDelay = item.drawDelay + 0.95; // Triggers right when water stream arrives
 
             return (
               <div
@@ -291,7 +296,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
                       ? `0 8px 20px ${item.color}33`
                       : '0 4px 12px rgba(0,0,0,0.06)',
                     backdropFilter: 'blur(8px)',
-                    maxWidth: '225px',
+                    maxWidth: '230px',
                   }}
                 >
                   {/* Circle Icon Badge */}
