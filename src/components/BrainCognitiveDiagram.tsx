@@ -13,7 +13,7 @@ interface CalloutItem {
   nodeX: number; // Anchor point on image canvas (0-560)
   nodeY: number;
   elbowX: number; // Line bend point
-  badgeX: number; // End point near badge edge
+  badgeX: number; // End point near badge
   badgeY: number;
   position: 'top-left' | 'bottom-left' | 'top-right' | 'bottom-right';
   badgeOffsetStyle: React.CSSProperties;
@@ -35,8 +35,8 @@ const CALLOUTS: CalloutItem[] = [
     borderColor: '#93c5fd',
     nodeX: 255,
     nodeY: 82,
-    elbowX: 210,
-    badgeX: 185,
+    elbowX: 200,
+    badgeX: 165,
     badgeY: 62,
     position: 'top-left',
     badgeOffsetStyle: { left: '8px' },
@@ -55,8 +55,8 @@ const CALLOUTS: CalloutItem[] = [
     borderColor: '#fde68a',
     nodeX: 345,
     nodeY: 118,
-    elbowX: 365,
-    badgeX: 345,
+    elbowX: 385,
+    badgeX: 415,
     badgeY: 62,
     position: 'top-right',
     badgeOffsetStyle: { right: '-24px' },
@@ -75,8 +75,8 @@ const CALLOUTS: CalloutItem[] = [
     borderColor: '#fbcfe8',
     nodeX: 195,
     nodeY: 245,
-    elbowX: 210,
-    badgeX: 185,
+    elbowX: 165,
+    badgeX: 140,
     badgeY: 326,
     position: 'bottom-left',
     badgeOffsetStyle: { left: '8px' },
@@ -93,11 +93,11 @@ const CALLOUTS: CalloutItem[] = [
     accentBg: '#6d28d9',
     cardBg: 'rgba(245, 243, 255, 0.96)',
     borderColor: '#ddd6fe',
-    nodeX: 305, // Placed precisely on lower Rubik's cube tile
-    nodeY: 295,
-    elbowX: 325,
-    badgeX: 345, // Ends cleanly right at the left border of purple badge container!
-    badgeY: 326,
+    nodeX: 305, // Placed precisely on the lower Rubik's cube tile
+    nodeY: 300,
+    elbowX: 370,
+    badgeX: 395,
+    badgeY: 326, // Vertically aligned with pink badge at y=326!
     position: 'bottom-right',
     badgeOffsetStyle: { right: '-24px' },
     startDotDelay: 5.7,
@@ -255,7 +255,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
           })}
         </div>
 
-        {/* SVG Flowchart Lines & Round Anchor/End Nodes (zIndex: 10 - ALWAYS ON TOP) */}
+        {/* SVG Flowchart Lines & Round Anchor/End Nodes (zIndex: 5 - ALWAYS VISIBLE ON TOP) */}
         <svg
           viewBox="0 0 560 420"
           style={{
@@ -264,7 +264,7 @@ export const BrainCognitiveDiagram: React.FC = () => {
             width: '100%',
             height: '100%',
             pointerEvents: 'none',
-            zIndex: 10,
+            zIndex: 5,
             overflow: 'visible',
           }}
         >
@@ -302,8 +302,8 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeWidth={strokeWidth + 2.5}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray="400"
-                  strokeDashoffset="400"
+                  strokeDasharray="360"
+                  strokeDashoffset="360"
                   style={{
                     animation: `growingLineEffect ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
                     opacity: 0.95,
@@ -318,8 +318,8 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeWidth={strokeWidth}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray="400"
-                  strokeDashoffset="400"
+                  strokeDasharray="360"
+                  strokeDashoffset="360"
                   style={{
                     animation: `growingLineEffect ${lineDuration}s cubic-bezier(0.25, 1, 0.4, 1) ${item.lineDelay}s forwards`,
                     opacity: activeHover && !isHovered ? 0.35 : 1,
