@@ -16,6 +16,7 @@ interface CalloutItem {
   badgeX: number; // End point near badge
   badgeY: number;
   position: 'top-left' | 'bottom-left' | 'top-right' | 'bottom-right';
+  drawDelay: number; // Delay in seconds for one-shot draw start
 }
 
 const CALLOUTS: CalloutItem[] = [
@@ -34,6 +35,24 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 180,
     badgeY: 76,
     position: 'top-left',
+    drawDelay: 0.2, // 1st line starts at 0.2s
+  },
+  {
+    id: 'spatial-vis',
+    title: 'Visualisasi Spasial',
+    subtitle: 'Spatial Reasoning (Rotasi 3D)',
+    icon: 'view_in_ar',
+    color: '#d97706', // Amber / Gold
+    accentBg: '#b45309',
+    cardBg: 'rgba(254, 252, 232, 0.95)',
+    borderColor: '#fde68a',
+    nodeX: 342,
+    nodeY: 118,
+    elbowX: 375,
+    badgeX: 380,
+    badgeY: 76,
+    position: 'top-right',
+    drawDelay: 1.0, // 2nd line starts at 1.0s
   },
   {
     id: 'parietal-lobe',
@@ -50,22 +69,7 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 180,
     badgeY: 308,
     position: 'bottom-left',
-  },
-  {
-    id: 'spatial-vis',
-    title: 'Visualisasi Spasial',
-    subtitle: 'Spatial Reasoning (Rotasi 3D)',
-    icon: 'view_in_ar',
-    color: '#d97706', // Gold / Amber
-    accentBg: '#b45309',
-    cardBg: 'rgba(254, 252, 232, 0.95)',
-    borderColor: '#fde68a',
-    nodeX: 342,
-    nodeY: 118,
-    elbowX: 375,
-    badgeX: 380,
-    badgeY: 76,
-    position: 'top-right',
+    drawDelay: 1.8, // 3rd line starts at 1.8s
   },
   {
     id: 'problem-solving',
@@ -82,6 +86,7 @@ const CALLOUTS: CalloutItem[] = [
     badgeX: 380,
     badgeY: 332,
     position: 'bottom-right',
+    drawDelay: 2.6, // 4th line starts at 2.6s
   },
 ];
 
@@ -124,7 +129,6 @@ export const BrainCognitiveDiagram: React.FC = () => {
               height: '100%',
               objectFit: 'contain',
               filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.08))',
-              transition: 'transform 0.4s ease',
             }}
           />
         </div>
@@ -161,12 +165,13 @@ export const BrainCognitiveDiagram: React.FC = () => {
             const isHovered = activeHover === item.id;
             const strokeWidth = isHovered ? 3.5 : 2.5;
 
-            // Draw polyline path from node to elbow to badge
+            // Polyline path: Node -> Elbow -> Badge
             const pathD = `M ${item.nodeX} ${item.nodeY} L ${item.elbowX} ${item.badgeY} L ${item.badgeX} ${item.badgeY}`;
+            const lineDuration = 0.9; // Line drawing duration (seconds)
 
             return (
               <g key={item.id}>
-                {/* Background Shadow Polyline Line */}
+                {/* 1. White Background Shadow Line */}
                 <path
                   d={pathD}
                   fill="none"
@@ -174,10 +179,15 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeWidth={strokeWidth + 2}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  opacity={0.9}
+                  strokeDasharray="350"
+                  strokeDashoffset="350"
+                  style={{
+                    animation: `lineDrawOneShot ${lineDuration}s cubic-bezier(0.25, 1, 0.5, 1) ${item.drawDelay}s forwards`,
+                    opacity: 0.95,
+                  }}
                 />
 
-                {/* Base Colored Solid Polyline Line */}
+                {/* 2. Main Colored Line (One-shot draw from node to badge) */}
                 <path
                   d={pathD}
                   fill="none"
@@ -185,48 +195,56 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   strokeWidth={strokeWidth}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  opacity={activeHover && !isHovered ? 0.4 : 0.95}
-                  style={{ transition: 'stroke-width 0.3s ease, opacity 0.3s ease' }}
+                  strokeDasharray="350"
+                  strokeDashoffset="350"
+                  style={{
+                    animation: `lineDrawOneShot ${lineDuration}s cubic-bezier(0.25, 1, 0.5, 1) ${item.drawDelay}s forwards`,
+                    opacity: activeHover && !isHovered ? 0.35 : 1,
+                    transition: 'stroke-width 0.3s ease, opacity 0.3s ease',
+                  }}
                 />
 
-                {/* Flowing Dash Beam Animation Layer */}
-                <path
-                  d={pathD}
-                  fill="none"
-                  stroke="#ffffff"
-                  strokeWidth={strokeWidth - 0.5}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  opacity={isHovered ? 1 : 0.75}
-                  className="animate-line-flow"
-                />
+                {/* 3. Initial Anchor Node Dot on Brain/Cube */}
+                <g style={{ opacity: 0, animation: `nodeAppear 0.4s ease-out ${item.drawDelay}s forwards` }}>
+                  {/* Outer Pulsing Ring */}
+                  <circle
+                    cx={item.nodeX}
+                    cy={item.nodeY}
+                    r={isHovered ? 10 : 8}
+                    fill={item.color}
+                    opacity={0.3}
+                    className="animate-node-pulse"
+                  />
+                  {/* Inner White Anchor Dot */}
+                  <circle
+                    cx={item.nodeX}
+                    cy={item.nodeY}
+                    r={isHovered ? 6 : 4.5}
+                    fill="#ffffff"
+                    stroke={item.color}
+                    strokeWidth="2.5"
+                  />
+                </g>
 
-                {/* Outer Pulsing Aura Circle at Anchor Node */}
+                {/* 4. End Point Node Dot near Badge */}
                 <circle
-                  cx={item.nodeX}
-                  cy={item.nodeY}
-                  r={isHovered ? 10 : 8}
-                  fill={item.color}
-                  opacity={0.3}
-                  className="animate-node-pulse"
-                />
-
-                {/* Inner White Node Circle */}
-                <circle
-                  cx={item.nodeX}
-                  cy={item.nodeY}
-                  r={isHovered ? 6 : 4.5}
+                  cx={item.badgeX}
+                  cy={item.badgeY}
+                  r="3.5"
                   fill="#ffffff"
                   stroke={item.color}
-                  strokeWidth="2.5"
-                  style={{ transition: 'all 0.3s ease' }}
+                  strokeWidth="2"
+                  style={{
+                    opacity: 0,
+                    animation: `nodeAppear 0.3s ease-out ${item.drawDelay + lineDuration - 0.1}s forwards`,
+                  }}
                 />
               </g>
             );
           })}
         </svg>
 
-        {/* HTML Callout Badges Layer */}
+        {/* HTML Callout Badges Layer (Appears ONE-SHOT right after line finishes drawing) */}
         <div
           style={{
             position: 'absolute',
@@ -235,17 +253,17 @@ export const BrainCognitiveDiagram: React.FC = () => {
             pointerEvents: 'none',
           }}
         >
-          {CALLOUTS.map((item, index) => {
+          {CALLOUTS.map((item) => {
             const isHovered = activeHover === item.id;
             const isTop = item.position.startsWith('top');
             const isLeft = item.position.endsWith('left');
+            const badgeAppearDelay = item.drawDelay + 0.8; // Triggers right when line finishes
 
             return (
               <div
                 key={item.id}
                 onMouseEnter={() => setActiveHover(item.id)}
                 onMouseLeave={() => setActiveHover(null)}
-                className="animate-badge-pop"
                 style={{
                   position: 'absolute',
                   top: isTop ? `${item.badgeY - 26}px` : `${item.badgeY - 26}px`,
@@ -253,9 +271,10 @@ export const BrainCognitiveDiagram: React.FC = () => {
                   right: !isLeft ? '8px' : 'auto',
                   pointerEvents: 'auto',
                   cursor: 'pointer',
-                  animationDelay: `${0.15 * index}s`,
-                  transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
+                  opacity: 0,
+                  animation: `badgePopOneShot 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${badgeAppearDelay}s forwards`,
                   transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+                  transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
                 }}
               >
                 {/* Modern Pill Badge Container */}
