@@ -95,11 +95,11 @@ const CALLOUTS: CalloutItem[] = [
     borderColor: '#ddd6fe',
     nodeX: 325, // Placed precisely on the lower Rubik's cube tile
     nodeY: 282,
-    elbowX: 400,
-    badgeX: 435,
-    badgeY: 275, // Lifted significantly higher up!
+    elbowX: 390,
+    badgeX: 425,
+    badgeY: 300, // Balanced height (lowered slightly from 275)
     position: 'bottom-right',
-    badgeOffsetStyle: { right: '-52px' }, // Shifted significantly further right!
+    badgeOffsetStyle: { right: '-44px' }, // Shifted right for zero overlap
     startDotDelay: 5.7,
     lineDelay: 6.0,
     badgeDelay: 7.1,
