@@ -464,3 +464,119 @@ details[open] summary .group-open\:rotate-180 { transform: rotate(180deg); }
 
 
 
+
+
+/* ==================== SCROLL ZOOM-IN REVEAL ANIMATIONS ==================== */
+.scroll-zoom {
+  opacity: 0;
+  transform: scale(0.86);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-zoom.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.scroll-zoom-delay-100 { transition-delay: 0.1s; }
+.scroll-zoom-delay-150 { transition-delay: 0.15s; }
+.scroll-zoom-delay-200 { transition-delay: 0.2s; }
+.scroll-zoom-delay-250 { transition-delay: 0.25s; }
+.scroll-zoom-delay-300 { transition-delay: 0.3s; }
+.scroll-zoom-delay-400 { transition-delay: 0.4s; }
+.scroll-zoom-delay-500 { transition-delay: 0.5s; }
+
+
+
+/* ============================================================
+   TRANSPARENCY PAGE EXACT DESIGN SYSTEM UTILITIES
+   ============================================================ */
+.font-headline-xl { font-size: 48px; line-height: 56px; letter-spacing: -0.02em; font-weight: 800; font-family: "Inter", sans-serif; }
+.font-headline-lg { font-size: 36px; line-height: 44px; letter-spacing: -0.02em; font-weight: 700; font-family: "Inter", sans-serif; }
+.font-headline-md { font-size: 24px; line-height: 32px; letter-spacing: -0.01em; font-weight: 700; font-family: "Inter", sans-serif; }
+.font-headline-sm { font-size: 20px; line-height: 28px; font-weight: 600; font-family: "Inter", sans-serif; }
+.font-body-lg { font-size: 18px; line-height: 28px; font-weight: 400; font-family: "Inter", sans-serif; }
+.font-body-md { font-size: 15px; line-height: 24px; font-weight: 400; font-family: "Inter", sans-serif; }
+.font-body-sm { font-size: 13px; line-height: 20px; font-weight: 400; font-family: "Inter", sans-serif; }
+.font-label-lg { font-size: 15px; line-height: 20px; font-weight: 600; font-family: "Inter", sans-serif; }
+.font-label-md { font-size: 13px; line-height: 18px; font-weight: 600; font-family: "Inter", sans-serif; }
+.font-label-sm { font-size: 11px; line-height: 16px; letter-spacing: 0.04em; font-weight: 500; font-family: "Inter", sans-serif; }
+
+.px-space-md { padding-left: 1rem; padding-right: 1rem; }
+.px-space-lg { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-space-md { padding-top: 1rem; padding-bottom: 1rem; }
+.p-space-md { padding: 1rem; }
+.p-space-lg { padding: 1.5rem; }
+.p-space-xl { padding: 2.5rem; }
+
+.gap-space-xs { gap: 0.25rem; }
+.gap-space-sm { gap: 0.5rem; }
+.gap-space-md { gap: 1rem; }
+.gap-space-lg { gap: 1.5rem; }
+.gap-space-xl { gap: 2.5rem; }
+
+/* ============================================================
+   COMPLETE TRANSPARENCY REFERENCE DESIGN SYSTEM TOKENS
+   ============================================================ */
+.bg-background { background-color: #f6fbf5; }
+.bg-surface-container-lowest { background-color: #ffffff; }
+.bg-surface-container-low { background-color: #f0f5ef; }
+.bg-surface-container { background-color: #eaefe9; }
+.bg-surface-container-high { background-color: #e5e9e4; }
+.bg-surface-card-subtle { background-color: #F8FAFC; }
+.bg-surface-soft-slate { background-color: #F1F4F9; }
+.bg-primary { background-color: #005f40; }
+.bg-primary-container { background-color: #007a53; }
+.bg-error-container { background-color: #ffdad6; }
+\.bg-primary\/10 { background-color: rgba(0, 95, 64, 0.1); }
+
+.text-primary { color: #005f40; }
+.text-on-primary { color: #ffffff; }
+.text-text-slate-primary { color: #111827; }
+.text-text-slate-secondary { color: #4B5563; }
+.text-on-surface-variant { color: #3e4942; }
+.text-error { color: #ba1a1a; }
+.text-on-surface { color: #181d19; }
+
+.border-border-subtle { border-color: #E2E8F0; }
+.border-primary { border-color: #005f40; }
+
+.font-headline-xl { font-size: 48px; line-height: 56px; letter-spacing: -0.02em; font-weight: 800; font-family: "Inter", sans-serif; }
+.font-headline-lg { font-size: 36px; line-height: 44px; letter-spacing: -0.02em; font-weight: 700; font-family: "Inter", sans-serif; }
+.font-headline-md { font-size: 24px; line-height: 32px; letter-spacing: -0.01em; font-weight: 700; font-family: "Inter", sans-serif; }
+.font-headline-sm { font-size: 20px; line-height: 28px; font-weight: 600; font-family: "Inter", sans-serif; }
+.font-body-lg { font-size: 18px; line-height: 28px; font-weight: 400; font-family: "Inter", sans-serif; }
+.font-body-md { font-size: 15px; line-height: 24px; font-weight: 400; font-family: "Inter", sans-serif; }
+.font-body-sm { font-size: 13px; line-height: 20px; font-weight: 400; font-family: "Inter", sans-serif; }
+.font-label-lg { font-size: 15px; line-height: 20px; font-weight: 600; font-family: "Inter", sans-serif; }
+.font-label-md { font-size: 13px; line-height: 18px; font-weight: 600; font-family: "Inter", sans-serif; }
+.font-label-sm { font-size: 11px; line-height: 16px; letter-spacing: 0.04em; font-weight: 500; font-family: "Inter", sans-serif; }
+
+.text-headline-xl { font-size: 48px; line-height: 56px; letter-spacing: -0.02em; font-weight: 800; }
+.text-headline-lg { font-size: 36px; line-height: 44px; letter-spacing: -0.02em; font-weight: 700; }
+.text-headline-md { font-size: 24px; line-height: 32px; letter-spacing: -0.01em; font-weight: 700; }
+.text-headline-sm { font-size: 20px; line-height: 28px; font-weight: 600; }
+.text-body-lg { font-size: 18px; line-height: 28px; font-weight: 400; }
+.text-body-md { font-size: 15px; line-height: 24px; font-weight: 400; }
+.text-body-sm { font-size: 13px; line-height: 20px; font-weight: 400; }
+.text-label-lg { font-size: 15px; line-height: 20px; font-weight: 600; }
+.text-label-md { font-size: 13px; line-height: 18px; font-weight: 600; }
+.text-label-sm { font-size: 11px; line-height: 16px; letter-spacing: 0.04em; font-weight: 500; }
+
+.px-space-md { padding-left: 1rem; padding-right: 1rem; }
+.px-space-lg { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-space-md { padding-top: 1rem; padding-bottom: 1rem; }
+.p-space-md { padding: 1rem; }
+.p-space-lg { padding: 1.5rem; }
+.p-space-xl { padding: 2.5rem; }
+
+.gap-space-xs { gap: 0.25rem; }
+.gap-space-sm { gap: 0.5rem; }
+.gap-space-md { gap: 1rem; }
+.gap-space-lg { gap: 1.5rem; }
+.gap-space-xl { gap: 2.5rem; }
+
+\.from-surface-tint-hero\/30 { --tw-gradient-from: rgba(255, 232, 210, 0.3); --tw-gradient-stops: var(--tw-gradient-from), #f6fbf5, var(--tw-gradient-to, rgba(246, 251, 245, 0)); }
+.via-background { --tw-gradient-stops: var(--tw-gradient-from), #f6fbf5, var(--tw-gradient-to, rgba(246, 251, 245, 0)); }
+.to-background { --tw-gradient-to: #f6fbf5; }

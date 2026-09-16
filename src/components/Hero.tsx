@@ -1,3 +1,4 @@
+import { ScrollZoomIn } from './ScrollZoomIn';
 import React from 'react';
 import { TestMode, TestResult } from '../types';
 import { BrainCognitiveDiagram } from './BrainCognitiveDiagram';
@@ -9,6 +10,105 @@ interface HeroProps {
   onSelectPastResult?: (res: TestResult) => void;
   onClearHistory?: () => void;
 }
+
+
+const TypewriterText: React.FC = () => {
+  const segments = [
+    { text: "Instrumen psikometrik berbasis ", bold: false },
+    { text: "Raven's Progressive Matrices (RPM)", bold: true },
+    { text: " dengan standardisasi kurva ", bold: false },
+    { text: "Skala Wechsler (Mean 100, SD 15)", bold: true },
+    { text: ". 100% gratis selamanya tanpa tipu muslihat kartu kredit, diproses aman langsung pada peramban web Anda (Client-Side Privacy).", bold: false },
+  ];
+
+  const totalChars = segments.reduce((sum, s) => sum + s.text.length, 0);
+  const [charCount, setCharCount] = React.useState(0);
+  const [isTypingStarted, setIsTypingStarted] = React.useState(false);
+  const containerRef = React.useRef<HTMLParagraphElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsTypingStarted(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  React.useEffect(() => {
+    if (!isTypingStarted) return;
+
+    const interval = setInterval(() => {
+      setCharCount((prev) => {
+        if (prev < totalChars) {
+          return prev + 1;
+        }
+        clearInterval(interval);
+        return prev;
+      });
+    }, 18);
+
+    return () => clearInterval(interval);
+  }, [isTypingStarted, totalChars]);
+
+  let remaining = charCount;
+
+  return (
+    <p
+      ref={containerRef}
+      style={{
+        color: "#4b5563",
+        fontSize: "1rem",
+        lineHeight: 1.75,
+        margin: 0,
+        minHeight: "4.8em",
+      }}
+    >
+      <style>{`
+        @keyframes typewriterBlink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
+      {segments.map((seg, idx) => {
+        if (remaining <= 0) return null;
+        const currentSlice = seg.text.slice(0, remaining);
+        remaining -= seg.text.length;
+
+        if (seg.bold) {
+          return (
+            <strong key={idx} style={{ color: "#111827", fontWeight: 600 }}>
+              {currentSlice}
+            </strong>
+          );
+        }
+        return <span key={idx}>{currentSlice}</span>;
+      })}
+
+      {charCount < totalChars && (
+        <span
+          style={{
+            display: "inline-block",
+            width: "2px",
+            height: "1em",
+            backgroundColor: "#059669",
+            marginLeft: "3px",
+            verticalAlign: "middle",
+            animation: "typewriterBlink 0.7s infinite",
+          }}
+        />
+      )}
+    </p>
+  );
+};
 
 export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
   return (
@@ -34,6 +134,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
             alignItems: 'center',
           }}>
             {/* ────── Left Column: Copywriting ────── */}
+            <ScrollZoomIn delay={0.05}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <h1 style={{
                 color: '#111827',
@@ -56,13 +157,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
                 {' '}(Fluid Intelligence) Anda Secara Akurat &amp; Transparan.
               </h1>
 
-              <p style={{ color: '#4b5563', fontSize: '1rem', lineHeight: 1.75, margin: 0 }}>
-                Instrumen psikometrik berbasis{' '}
-                <strong style={{ color: '#111827', fontWeight: 600 }}>Raven's Progressive Matrices (RPM)</strong>{' '}
-                dengan standardisasi kurva{' '}
-                <strong style={{ color: '#111827', fontWeight: 600 }}>Skala Wechsler (Mean 100, SD 15)</strong>.
-                {' '}100% gratis selamanya tanpa tipu muslihat kartu kredit, diproses aman langsung pada peramban web Anda (Client-Side Privacy).
-              </p>
+                            <TypewriterText />
 
               {/* CTA Buttons */}
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -78,7 +173,6 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
                   }}
                 >
                   <span>Mulai Tes Standar (12 Menit)</span>
-                  <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>arrow_forward</span>
                 </button>
                 <a
                   href="#mode-tes"
@@ -117,10 +211,13 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
               </div>
             </div>
 
+            </ScrollZoomIn>
             {/* ────── Right Column: Cognitive Flow Diagram ────── */}
+            <ScrollZoomIn delay={0.25}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <BrainCognitiveDiagram />
             </div>
+            </ScrollZoomIn>
 
 
           </div>{/* end 2-col grid */}
@@ -131,6 +228,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
       <section id="mode-tes" style={{ background: '#f9fafb', padding: '72px 0' }}>
         <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
           {/* Header */}
+          <ScrollZoomIn delay={0.05}>
           <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto 56px auto' }}>
             <div style={{
               display: 'inline-block',
@@ -150,10 +248,12 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
             </p>
           </div>
 
+          </ScrollZoomIn>
           {/* 3-column Bento Grid */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px', alignItems: 'start' }}>
 
             {/* CARD 1 – Tes Kilat */}
+            <ScrollZoomIn delay={0.1} style={{ height: "100%" }}>
             <div style={{
               background: '#fff', border: '1px solid #e5e7eb', borderRadius: '16px',
               padding: '24px', display: 'flex', flexDirection: 'column',
@@ -201,8 +301,10 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
                 Mulai Screening Cepat
               </button>
             </div>
+            </ScrollZoomIn>
 
             {/* CARD 2 – Tes Standar Klinis (ELEVATED) */}
+            <ScrollZoomIn delay={0.2} style={{ height: "100%" }}>
             <div style={{
               background: '#fff', border: '2px solid #059669', borderRadius: '16px',
               padding: '28px', display: 'flex', flexDirection: 'column',
@@ -266,11 +368,12 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
                 }}
               >
                 <span>Mulai Tes Standar Sekarang</span>
-                <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>arrow_forward</span>
               </button>
             </div>
+            </ScrollZoomIn>
 
             {/* CARD 3 – Mode Latihan Bebas */}
+            <ScrollZoomIn delay={0.3} style={{ height: "100%" }}>
             <div style={{
               background: '#fff', border: '1px solid #e5e7eb', borderRadius: '16px',
               padding: '24px', display: 'flex', flexDirection: 'column',
@@ -318,12 +421,14 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
                 Buka Eksplorasi Latihan
               </button>
             </div>
+            </ScrollZoomIn>
 
           </div>
         </div>
       </section>
 
       {/* ==================== FINAL CTA CONSOLE BANNER ==================== */}
+      <ScrollZoomIn delay={0.05}>
       <section style={{
         background: 'linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%)',
         borderTop: '1px solid #e5e7eb',
@@ -365,7 +470,9 @@ export const Hero: React.FC<HeroProps> = ({ onStartTest }) => {
           </button>
         </div>
       </section>
+      </ScrollZoomIn>
 
     </div>
   );
 };
+              <TypewriterText />

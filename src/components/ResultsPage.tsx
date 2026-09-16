@@ -1,3 +1,4 @@
+import { ScrollZoomIn } from './ScrollZoomIn';
 import React, { useEffect, useState } from 'react';
 import { TestResult, Question } from '../types';
 import { MatrixCellSVG } from './MatrixCellSVG';
@@ -63,6 +64,7 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
       {/* Top Banner Alert (Personality.co style) */}
+      <ScrollZoomIn delay={0.05}>
       <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-card flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-600">
@@ -96,11 +98,13 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
           </button>
         </div>
       </div>
+      </ScrollZoomIn>
 
       {/* Main Score Overview Card */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left: Score Gauge Display */}
-        <div className="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-8 shadow-card flex flex-col items-center justify-center text-center">
+        <ScrollZoomIn delay={0.1} className="lg:col-span-5 h-full">
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-card flex flex-col items-center justify-center text-center h-full">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
             Estimasi Skor IQ Psikometri Resmi
           </span>
@@ -158,6 +162,7 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
             </div>
           </div>
         </div>
+        </ScrollZoomIn>
 
         {/* Right: Interactive Normal Curve & Domain Breakdown */}
         <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-card flex flex-col justify-between">
@@ -389,6 +394,7 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
       </div>
 
       {/* Tech Architecture Banner bottom */}
+      <ScrollZoomIn delay={0.15}>
       <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
         <div>
           <h4 className="font-bold text-slate-900 text-base">Bagaimana platform tes IQ gratis ini dibuat?</h4>
@@ -403,6 +409,7 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({
           Buka Panduan Teknis
         </button>
       </div>
+      </ScrollZoomIn>
     </div>
   );
 };

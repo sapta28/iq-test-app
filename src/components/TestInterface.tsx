@@ -1,3 +1,4 @@
+import { ScrollZoomIn } from './ScrollZoomIn';
 import React, { useState, useEffect, useRef } from 'react';
 import { Question, TestMode } from '../types';
 import { MatrixCellSVG } from './MatrixCellSVG';
@@ -233,7 +234,8 @@ export const TestInterface: React.FC<TestInterfaceProps> = ({
         </div>
 
         {/* Right Column: 6 Option Choices (A-F) */}
-        <div className="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 shadow-card flex flex-col justify-between h-full">
+        <ScrollZoomIn delay={0.2} className="lg:col-span-5 h-full">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-card flex flex-col justify-between h-full">
           <div>
             <h4 className="text-xs font-bold text-slate-500 mb-4 uppercase tracking-wider">
               Pilihan Jawaban (A — F):
@@ -325,6 +327,7 @@ export const TestInterface: React.FC<TestInterfaceProps> = ({
             )}
           </div>
         </div>
+        </ScrollZoomIn>
       </div>
 
       {/* Confirmation Modal before Submit */}
