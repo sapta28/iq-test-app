@@ -1,129 +1,122 @@
 # Design Specification (desain.md)
-## Halaman Asesmen Tes IQ (Test Interface Page) — NeuroMatrix Labs
+## System Desain & Spesifikasi 7 Halaman Platform — NeuroMatrix Labs
 
 ---
 
-### 1. Filosofi & Panduan Desain (Design Principles & Aesthetics)
-Antarmuka Halaman Tes (**Test Interface**) dirancang dengan pendekatan **Clinical Academic Precision & Premium Minimalism**. Tampilan dibuat sangat fokus tanpa gangguan visual (*zero-clutter*) agar pengguna dapat mengalokasikan 100% fokus mental pada penalaran spasial dan abstrak.
+### 1. Sistem Desain Global (Global Design Tokens & Aesthetics)
 
-#### Prinsip Utama Desain:
-* **Fokus Kognitif Maksimal**: Penggunaan latar belakang netral soft slate (`#F1F4F9` & `#f6fbf5`) yang menenangkan mata selama tes berlangsung.
-* **Kontras Geometri Tinggi**: Matriks 3x3 dan bentuk SVG digambar dengan garis tajam beraksen gelap (`#111827`) di atas latar putih bersih (`#ffffff`) agar setiap detail pola terlihat jelas.
-* **Umpan Balik Visual Jelas**: Kartu pilihan jawaban memiliki indikator seleksi aktif yang kuat (`2px solid #005f40`) dengan bayangan halus (*soft shadow*) saat dipillih.
-* **Responsivitas Mulus**: Tata letak otomatis menyesuaikan antara tampilan desktop 2-kolom dan tampilan mobile stacked 1-kolom.
+**NeuroMatrix Labs** menggunakan bahasa desain **Clinical Academic Precision & Dark Emerald Premium**. Seluruh halaman dibuat dengan kontras tinggi, keterbacaan psikometrik murni, dan animasi mikro yang halus tanpa distraksi visual.
 
----
-
-### 2. Tokek Warna & Desain Token (Color System & Tokens)
-
-| Token Desain | Nilai Hex / CSS Variable | Peruntukan / Penggunaan |
-| :--- | :--- | :--- |
-| `--primary` | `#005f40` | Warna utama (Header badge, active item ring, tombol utama, checkmark) |
-| `--primary-container` | `#007a53` | Aksen kontainer emerald dan status terisi |
-| `--bg-surface` | `#f6fbf5` | Latar belakang utama halaman tes |
-| `--bg-surface-slate` | `#F1F4F9` | Latar belakang header bar & panel pendukung |
-| `--bg-surface-lowest` | `#ffffff` | Kartu matriks, kartu opsi jawaban, dan modal dialog |
-| `--text-slate-primary` | `#111827` | Teks judul, nomor soal, dan bentuk matriks utama |
-| `--text-slate-secondary` | `#4B5563` | Subtitle, instruksi, dan label sekunder |
-| `--border-subtle` | `#E2E8F0` | Garis pembatas kartu dan kontainer |
-| `--timer-alert` | `#DC2626` | Warna indikator waktu mundur saat < 2 menit |
-| `--timer-warning` | `#D97706` | Warna indikator waktu mundur saat < 5 menit |
-
----
-
-### 3. Tipografi (Typography Hierarchy)
-Menggunakan **Inter Google Font** untuk keterbacaan tinggi di berbagai ukuran layar:
-
+#### 1.1 Tokek Warna Utama (Color System)
 ```css
-/* Spesifikasi Ukuran Teks */
-.font-headline-lg { font-size: 32px; font-weight: 800; line-height: 40px; letter-spacing: -0.02em; }
-.font-headline-sm { font-size: 20px; font-weight: 700; line-height: 28px; }
-.font-body-lg     { font-size: 18px; font-weight: 400; line-height: 28px; }
-.font-body-md     { font-size: 15px; font-weight: 400; line-height: 24px; }
-.font-label-md    { font-size: 13px; font-weight: 600; line-height: 18px; }
-.font-label-sm    { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+:root {
+  /* Primary Emerald Palette */
+  --primary: #005f40;             /* Dark Emerald Utama */
+  --primary-container: #007a53;   /* Emerald Container */
+  --primary-fixed: #95f6c6;       /* Emerald Highlight */
+  --primary-fixed-dim: #79d9ab;   /* Soft Emerald */
+  --on-primary: #ffffff;
+
+  /* Surface & Background Palette */
+  --bg-surface: #f6fbf5;          /* Background Utama Halaman */
+  --bg-surface-lowest: #ffffff;   /* Kartu & Modal Container */
+  --bg-surface-low: #f0f5ef;      /* Subtle Container Low */
+  --bg-surface-container: #eaefe9;/* Subtle Container Normal */
+  --bg-surface-high: #e5e9e4;     /* Highlight Section Bar */
+  --bg-surface-subtle: #F8FAFC;   /* Bento Card Background */
+  --bg-surface-slate: #F1F4F9;    /* Hero Header Slate */
+
+  /* Text & Typography Palette */
+  --text-slate-primary: #111827;  /* Judul & Teks Utama */
+  --text-slate-secondary: #4B5563;/* Teks Deskripsi & Subtitle */
+  --text-on-surface: #181d19;     /* Teks Body Netral */
+  --outline-variant: #bdc9c0;     /* Border Tipis Netral */
+  --border-subtle: #E2E8F0;       /* Border Kartu & Pembatas */
+}
 ```
 
+#### 1.2 Sistem Tipografi (Typography)
+* **Font Family**: Inter (Google Fonts)
+* **Headline XL**: `48px / 56px`, `Font-Weight: 800`, `Letter-Spacing: -0.02em`
+* **Headline LG**: `36px / 44px`, `Font-Weight: 700`, `Letter-Spacing: -0.02em`
+* **Headline SM**: `20px / 28px`, `Font-Weight: 600`
+* **Body LG**: `18px / 28px`, `Font-Weight: 400`
+* **Body MD**: `15px / 24px`, `Font-Weight: 400`
+* **Label SM**: `11px / 16px`, `Font-Weight: 700`, `Letter-Spacing: 0.08em`, `Uppercase`
+
 ---
 
-### 4. Struktur Tata Letak Antarmuka (UI Layout & Wireframe Hierarchy)
+### 2. Spesifikasi Desain 7 Halaman Utama (Page Design Details)
 
+#### 2.1 Halaman Beranda (Hero Page) — `Hero.tsx`
+* **Header Banner**: Teks judul besar dengan penanda badge `NEUROMATRIX LABS` di pojok kiri atas.
+* **Tiga Kartu Mode Tes**:
+  * Dipasang dalam grid 3-kolom responsif.
+  * Kartu mode berlatar belakang `#ffffff` dengan border `#E2E8F0` dan efek hover elevate (`translateY(-4px)`).
+  * Tombol aksi tanpa icon panah (`arrow_forward`), memuat teks bersih (*"Mulai Tes Standar (12 Menit)"*).
+* **Drawer Riwayat Tes**: Kartu bawah berlatar `#F8FAFC` yang menampilkan 10 riwayat skor tes terakhir dari local storage.
+
+#### 2.2 Halaman Metodologi RPM — `RpmMethodologyPage.tsx`
+* **Kartu Penjelasan Metodologi**: Grid bento yang mengulas 3 domain matriks progresif (Penalaran Induktif, Visual Spasial, Differensiasi Kompleks).
+* **Modal Buku Putih Transparansi**: Popup drawer penjelasan korelasi psikometri dengan tes WAIS-IV.
+
+#### 2.3 Halaman Kohort Normatif — `NormativeCohortPage.tsx`
+* **Grafik Kurva Gauss Interaktif (Gaussian Bell Curve)**:
+  * Animasi jalur garis kurva SVG mengalir dari kiri ke kanan.
+  * Baris titik puncak rata-rata populasi (Mean 100).
+  * Penghitung angka persentil real-time (2.2%, 13.6%, 68.2%, 13.6%, 2.2%) yang menghitung mundur/maju dari 0 saat dimuat.
+
+#### 2.4 Halaman Transparansi & Zero Paywall — `TransparencyPage.tsx`
+* **Tabel Perbandingan Etika**:
+  * Kolom Kiri (*Situs Komersial Umum*): Border merah lembut `#ffdad6`, background `#fff5f5`, ikon cancel/warning.
+  * Kolom Kanan (*NeuroMatrix Labs*): Border emerald `#005f40`, background `#E6F2ED`, ikon checkmark verified.
+
+#### 2.5 Halaman FAQ & Pusat Bantuan — `FaqPage.tsx`
+* **Hero Search Bar**: Input pencarian dengan ikon `search` di kiri dan label `ESC untuk reset` di kanan.
+* **Filter Pills Category**: Pill kategori (*Semua*, *Pelaksanaan*, *Skor*, *Metodologi*, *Privasi*) dengan active state background `#005f40` dan teks putih.
+* **Accordion Item**:
+  * Default state: **Tertutup (collapsed)** untuk seluruh pertanyaan saat pertama kali dibuka.
+  * Open state: Rotasi panah `expand_more` 180°, latar belakang `#FAFCFA`, border pembatas halus.
+* **Bento Support Card**: Card latar `#F8FAFC` dengan tombol email `mailto:support@neuromatrix.id`.
+
+#### 2.6 Halaman Antarmuka Pengerjaan Tes — `TestInterface.tsx`
+* **Header Control Bar**: Timer mundur dengan ring status visual (Hijau `#005f40` -> Merah `#DC2626` saat < 2m).
+* **Matriks 3x3 Canvas**: Kartu `#ffffff` dengan border `#E2E8F0`, slot kosong `?` dengan warna highlight lembut `#F0F7F4`.
+* **Kisi Opsi Jawaban**: 6–8 opsi kartu berukuran besar (mudah di-tap jari mobile) dengan ring seleksi aktif `2px solid #005f40`.
+* **Palet Nomor Soal**: Grid 1–30 tombol nomor soal dengan penanda hijau untuk nomor yang telah diisi.
+
+#### 2.7 Halaman Hasil Tes & Laporan IQ — `ResultsPage.tsx`
+* **Header Skor Display**: Angka skor IQ berukuran `44px` bold (misal: **128**) dengan label persentil populasi.
+* **Diagram Kognitif Otak Interaktif (`BrainCognitiveDiagram.tsx`)**: VisualisasiSVG domain kognitif.
+* **Generator Sertifikat PDF**: Desain sertifikat resmi berlatar putih bersih dengan bingkai emas/emerald, stempel digital, QR Code Verifikasi, dan SHA-256 Checksum Hash.
+
+---
+
+### 3. Header & Footer Universal Layout Specs
+
+#### Header Site Universal (`Header.tsx`)
+```css
+/* Layout Header Full Width Pepet Samping */
+.header-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px 16px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
 ```
-+-----------------------------------------------------------------------------------+
-|  [NEUROMATRIX LABS]   [Badge Mode: Tes Standar 12m]   [⏱ 10:45]   [Soal 4 / 30]  [X] |
-+-----------------------------------------------------------------------------------+
-|                                                                                   |
-|  +-------------------------------------+   +-----------------------------------+  |
-|  | KANVAS MATRIKS UTAMA (SVG 3x3)      |   | KISI PILIHAN JAWABAN (6-8 OPSI)   |  |
-|  | +-------+-------+-------+           |   | +-------+ +-------+ +-------+     |  |
-|  | |  (A)  |  (B)  |  (C)  |           |   | | Opsi 1| | Opsi 2| | Opsi 3|     |  |
-|  | +-------+-------+-------+           |   | +-------+ +-------+ +-------+     |  |
-|  | |  (D)  |  (E)  |  (F)  |           |   | | Opsi 4| |[Opsi 5]| | Opsi 6|     |  |
-|  | +-------+-------+-------+           |   | +-------+ +-------+ +-------+     |  |
-|  | |  (G)  |  (H)  |  [?]  |           |   |  *Ring Emerald pada Opsi Terpilih  |  |
-|  | +-------+-------+-------+           |   +-----------------------------------+  |
-|  +-------------------------------------+                                          |
-|                                                                                   |
-|  +-----------------------------------------------------------------------------+  |
-|  | NAVIGASI PALET SOAL:                                                        |  |
-|  | [ < Sebelum ]  [1] [2] [3] [*4*] [5] ... [30]  [ Selanjutnya > ]  [Selesai] |  |
-|  +-----------------------------------------------------------------------------+  |
-+-----------------------------------------------------------------------------------+
-```
+* **Logo (Sisi Kiri)**: Icon `grid_view` + Teks `NEUROMATRIX LABS` + Subtitle `Evaluasi Fluid Intelligence Terkalibrasi` persis di pinggir kiri layar.
+* **Navigasi (Tengah)**: Link *Beranda*, *Metodologi RPM*, *Kohort Normatif*, *Transparansi*, *FAQ* dengan indikator garis bawah emerald (`border-bottom: 2px solid #059669`) pada halaman aktif.
+* **Tombol CTA (Sisi Kanan)**: Tombol *"Mulai Tes IQ Gratis"* tanpa ikon panah, dipepetkan di pinggir kanan layar.
 
 ---
 
-### 5. Detail Komponen Visual (Component Design Specs)
-
-#### 5.1 Header Control Bar
-* **Tinggi Bar**: `68px` dengan position `sticky top: 0` dan `backdrop-filter: blur(12px)`.
-* **Badge Timer**:
-  * Kontainer berbentuk kapsul (`border-radius: 9999px`) dengan padding `6px 14px`.
-  * Background `#E6F2ED` saat waktu aman, berubah menjadi `#FEF2F2` (Merah) saat kritis.
-  * Teks angka timer menggunakan font monospaced angka untuk mencegah *layout shift* saat detik berjalan.
-
-#### 5.2 Card Matriks 3x3 (Matrix Puzzle Canvas Card)
-* **Background Card**: `#ffffff` dengan border `1px solid #E2E8F0` dan `border-radius: 16px`.
-* **Grid 3x3**:
-  * Menggunakan CSS Grid `grid-template-columns: repeat(3, 1fr)` dengan gap `12px`.
-  * Setiap sel matriks memuat batas garis tipis `border: 1px solid #E2E8F0` dan sudut membulat `border-radius: 8px`.
-  * Tile kosong `[?]` memiliki latar belakang kecokelatan/emerald lembut (`#F0F7F4`) dengan tanda tanya animasi pulsing lembut.
-
-#### 5.3 Opsi Jawaban (Option Selection Grid Cards)
-* **Tata Letak**: Grid 2-kolom atau 3-kolom tergantung lebar perangkat.
-* **State Interaksi**:
-  * *Default*: Background `#ffffff`, border `1px solid #E2E8F0`, cursor pointer.
-  * *Hover*: Shift posisi naik 2px (`transform: translateY(-2px)`), border `#005f40`.
-  * *Selected*: Background `#F0F7F4`, border `2px solid #005f40`, icon centang emerald di pojok kanan atas.
-  * *Keyboard Badge*: Angka pembantu `[1]`, `[2]`, dst. di sudut kiri atas opsi.
-
-#### 5.4 Palet Navigasi Soal (Item Jumper Toolbar)
-* **Pill Nomor Soal**:
-  * Ukuran `36px x 36px` bundar/rounded-lg.
-  * *Terjawab*: Background `#005f40`, teks `#ffffff`.
-  * *Aktif Saat Ini*: Border `2px solid #005f40`, background `#ffffff`, teks `#005f40` (bold).
-  * *Belum Terjawab*: Background `#F1F4F9`, teks `#4B5563`.
-
-#### 5.5 Modal Konfirmasi Submit (Submit Confirmation Dialog)
-* Modal popup di tengah layar dengan overlay `rgba(0,0,0,0.5)` dan *backdrop blur*.
-* Menampilkan ringkasan status:
-  * Jumlah soal yang telah dijawab vs total soal.
-  * Peringatan jika masih ada nomor yang kosong.
-  * Tombol *"Lanjutkan Pengerjaan"* vs *"Ya, Selesaikan Tes Sekarang"*.
-
----
-
-### 6. Animasi & Mikro-Interaksi (Animations & Transitions)
-1. **ScrollZoomIn Component**:
-   * Seluruh blok kanvas matriks dan opsi jawaban dibungkus komponen `ScrollZoomIn` agar muncul dengan efek pemesaran proporsional yang mulus (`scale(0.92)` ke `scale(1)`).
-2. **Transition Option Select**:
-   * Transisi `all 0.15s ease-in-out` pada saat berpindah opsi jawaban.
-3. **Timer Pulse**:
-   * Efek berdenyut (*pulse animation*) pada jam ketika waktu tersisa kurang dari 120 detik.
-
----
-
-### 7. Kepatuhan Aksesibilitas (Accessibility & Responsiveness)
-* **Kontras Warna**: Semua teks dan ikon memenuhi standar WCAG AA (kontras minimal 4.5:1).
-* **Ukuran Sentuh Mobile (Touch Target)**: Kartu opsi jawaban memiliki tinggi minimal `60px` di mobile agar mudah ditekan jari.
-* **Dukungan Layar Sentuh & Mouse**: Kompatibel penuh dengan input tap/click maupun shortcut keyboard desktop.
+### 4. Efek Animasi & Scroll (ScrollZoomIn Animation)
+Setiap section pada seluruh 7 halaman dibungkus oleh komponen `<ScrollZoomIn>`:
+* **Opacity**: Transisi dari `0` ke `1`.
+* **Transform**: Transisi dari `scale(0.86)` ke `scale(1)`.
+* **Timing Function**: `cubic-bezier(0.34, 1.56, 0.64, 1)` durasi $0.6$ detik.
+* **Intersect Observer**: Memicu animasi secara otomatis saat section di-scroll masuk ke viewport layar.
